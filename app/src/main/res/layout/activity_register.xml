@@ -58,43 +58,7 @@
         app:layout_constraintVertical_bias="0.1">
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/inter"
-            android:text="Usuario"
-            android:textColor="#8F959E"
-            android:textSize="13dp" />
-
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grisClaro"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-
-        <TextView
             android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/inter"
-            android:text="Contraseña"
-            android:textColor="#8F959E"
-            android:textSize="13dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grisClaro"
-            android:ems="10"
-            android:inputType="textPassword" />
-
-        <TextView
-            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -104,17 +68,41 @@
             android:textSize="13dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grisClaro"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter"
+            android:text="Contraseña"
+            android:textColor="#8F959E"
+            android:textSize="13dp" />
+
+        <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grisClaro"
             android:ems="10"
             android:inputType="textPassword" />
 
+        <ProgressBar
+            android:id="@+id/progressBarLog"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#9775FA"

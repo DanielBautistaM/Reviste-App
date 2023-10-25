@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "445128302538",
+    "project_id": "reviste-mobile",
+    "storage_bucket": "reviste-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445128302538:android:d864da3dc4e7607801b933",
+        "android_client_info": {
+          "package_name": "com.example.reviste_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxx3OKrQddLGwfYZ_fKaz8y4EIAZpUSCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

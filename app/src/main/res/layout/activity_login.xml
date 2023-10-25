@@ -58,7 +58,7 @@
             android:textSize="13dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/email_Log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grisClaro"
@@ -76,7 +76,7 @@
             android:textSize="13dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/password_Log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grisClaro"
@@ -102,7 +102,7 @@
                 android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/registerNow"
                 android:layout_width="54dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -111,12 +111,20 @@
                 android:textColor="@color/gris"
                 android:textSize="13dp"
                 android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBarLog"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView6"
+
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#9775FA"
