@@ -6,7 +6,8 @@
     <color name="principal_color">#9775FA</color>
     <color name="grisClaro">#C0C0C0</color>
     <color name="transparent">#00000000</color>
-
+    <color name="gris_buttons">#F5F6FA</color>
+    <color name="red_button">#EA4335</color>
 
 
 </resources>

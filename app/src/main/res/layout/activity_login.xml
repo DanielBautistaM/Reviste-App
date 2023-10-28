@@ -102,7 +102,7 @@
                 android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/registerNow"
+                android:id="@+id/register_button"
                 android:layout_width="54dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

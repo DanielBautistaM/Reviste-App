@@ -38,9 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password_Log);
         buttonLog = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBarLog);
+        RegisterBut = findViewById(R.id.register_button);
 
-        TextView textView = findViewById(R.id.registerNow); // Replace with the actual ID of your TextView
-        textView.setOnClickListener(new View.OnClickListener() {
+
+        RegisterBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -70,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
                                     Toast.makeText(LoginActivity.this, "Autenticado :D.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), LogOutActivity.class);
                                     startActivity(intent);
