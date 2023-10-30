@@ -37,6 +37,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
 
+    implementation("com.airbnb.android:lottie:6.1.0")
+
+
     implementation("com.google.android.gms:play-services-auth")
 
 

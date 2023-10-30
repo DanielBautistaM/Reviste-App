@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Revisteapp"
         tools:targetApi="31">
         <activity
+            android:name=".splashActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetalleProductoActivity"
             android:exported="false" />
         <activity
