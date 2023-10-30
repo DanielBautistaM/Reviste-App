@@ -16,20 +16,23 @@
 
         <ImageView
             android:id="@+id/img_product"
-            android:layout_width="100dp"
-            android:layout_height="160dp"
+            android:layout_width="160dp"
+            android:layout_height="250dp"
+            android:background="@color/gris_images"
             android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/name_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:fontFamily="@font/inter_medium"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/price_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="16dp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

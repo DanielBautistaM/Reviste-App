@@ -3,6 +3,9 @@ package com.example.reviste_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,6 +36,41 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         retrieveDataFromFirestore();
+
+        // Agregar funcionalidad a los botones
+        ImageButton btnHome = findViewById(R.id.btnhome);
+        ImageButton btnPlus = findViewById(R.id.btnplus);
+        ImageButton btnCarrito = findViewById(R.id.btncarrito);
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agregar aquí la lógica para cambiar a la pantalla de inicio
+                // Por ejemplo:
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agregar aquí la lógica para cambiar a la pantalla "Agregar"
+                // Por ejemplo:
+                Intent intent = new Intent(MainActivity.this, DetalleProductoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agregar aquí la lógica para cambiar a la pantalla del carrito
+                // Por ejemplo:
+                Intent intent = new Intent(MainActivity.this, LogOutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void retrieveDataFromFirestore() {

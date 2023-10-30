@@ -8,6 +8,8 @@
     <color name="transparent">#00000000</color>
     <color name="gris_buttons">#F5F6FA</color>
     <color name="red_button">#EA4335</color>
+    <color name="gris_images">#F3F3F3</color>
+    <color name="verde">#25CD09</color>
 
 
 </resources>
