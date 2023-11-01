@@ -1,241 +1,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="289dp"
-        android:background="@drawable/ModeloNike"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/img_producto_detalle"
-            android:layout_width="218dp"
-            android:layout_height="263dp"
-            android:layout_gravity="center"
-            android:background="@drawable/modelo"
-            android:scaleType="fitCenter" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|left|end"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/transparent"
-            android:src="@drawable/back" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="562dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingEnd="70dp"
-            android:text="Nike Club Fleece"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="106dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Precio"
-                android:textColor="#8F959E" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$70.000"
-                android:textColor="#28BD2E"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:layout_marginTop="3dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/img_espalda"
-            android:layout_width="94dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/espalda"
-            android:scaleType="fitCenter" />
-
-        <ImageView
-            android:id="@+id/img_perfil"
-            android:layout_width="91dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/perfil"
-            android:scaleType="fitCenter" />
-
-        <ImageView
-            android:id="@+id/img_cuello"
-            android:layout_width="98dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/cuello"
-            android:scaleType="fitCenter" />
-
-        <ImageView
-            android:id="@+id/img_bolsillo"
-            android:layout_width="113dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/bolsillo"
-            android:scaleType="fitCenter" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="301dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingStart="35dp"
-            android:text="Estado"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="47dp"
-            android:layout_gravity="center" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingStart="35dp"
-            android:text="Descripcion"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:autoSizeTextType="uniform"
-            android:gravity="center"
-            android:text="La sudadera con capucha Nike Throwback Pullover esta confeccionada con un tejido de rizo frances de primer calidad que combina un tacto."
-            android:textColor="#8F959E" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingStart="35dp"
-            android:text="Vendedor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_bolsillo2"
-                android:layout_width="37dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/einstein"
-                android:scaleType="fitCenter" />
-
-            <LinearLayout
-                android:layout_width="263dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingEnd="180dp"
-                    android:text="Leandro Cortes"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_weight="1"
-                    android:paddingStart="10dp"
-                    android:text="13 Sep, 2020"
-                    android:textColor="#8F959E"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_producto_detalle"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitCenter" />
 
     <TextView
-
-        android:id="@+id/btn_anadir_carrito"
+        android:id="@+id/nombre_producto_detalle"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:layout_weight="1"
-        android:background="#9775FA"
-        android:gravity="center"
-        android:paddingBottom="20dp"
-        android:text="Añadir al carrito"
-        android:textColor="#FFFFFF"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/precio_producto_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/descripcion_producto_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp" />
 
 </LinearLayout>

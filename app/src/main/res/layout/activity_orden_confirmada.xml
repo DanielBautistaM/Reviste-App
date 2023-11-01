@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ordenConfirmada">
 
-    <TextView
-
-        android:id="@+id/btn_orden_confirmada"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#9775FA"
-        android:gravity="center"
-        android:paddingBottom="20dp"
-        android:text="Orden Confirmada"
-        android:textColor="#FFFFFF"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -29,12 +14,12 @@
         android:layout_marginTop="237dp"
         android:layout_marginRight="146dp"
         android:layout_marginBottom="343dp"
-        android:src="@tools:sample/avatars"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/undraw_order_confirmed_aaw7_1" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout7"
