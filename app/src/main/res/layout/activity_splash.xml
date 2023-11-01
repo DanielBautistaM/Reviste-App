@@ -4,6 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/principal_color"
     tools:context=".splashActivity">
+
+    <TextView
+        android:id="@+id/Revisteapp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_alignparentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"/>
+
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/lottie"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layaout_centerInParent="True"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="True"
+        android:elevation="5dp"
+        app:lottie_rawRes="@raw/animation"/>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

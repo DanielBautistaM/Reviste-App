@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ordenConfirmada">
 
+    <TextView
+
+        android:id="@+id/btn_orden_confirmada"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#9775FA"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:text="Orden Confirmada"
+        android:textColor="#FFFFFF"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -50,17 +65,6 @@
             android:textAlignment="center"
             android:textColor="#8F959E"
             android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="79dp"
-            android:layout_marginTop="75dp"
-            android:backgroundTint="@color/principal_color"
-            app:cornerRadius="0dp"
-            android:text="Continua Comprando"
-            android:textSize="16sp"
-            app:iconSize="70dp" />
 
     </LinearLayout>
 
