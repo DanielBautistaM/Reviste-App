@@ -34,7 +34,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-interop")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-database:20.3.0")
-    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-firestore:24.1.0")
+    implementation("com.google.firebase:firebase-storage:20.0.0")
+
 
 
     implementation("com.airbnb.android:lottie:6.1.0")
@@ -44,6 +46,7 @@ dependencies {
 
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
 

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Agregar aquí la lógica para cambiar a la pantalla "Agregar"
                 // Por ejemplo:
-                Intent intent = new Intent(MainActivity.this, DetalleProductoActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
                 startActivity(intent);
             }
         });
