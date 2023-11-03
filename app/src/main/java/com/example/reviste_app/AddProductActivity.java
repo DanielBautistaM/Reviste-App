@@ -95,7 +95,8 @@ public class AddProductActivity extends AppCompatActivity {
                             public void onSuccess(Uri downloadUrl) {
                                 String imageUrl = downloadUrl.toString();
 
-                                Product product = new Product(name, price, imageUrl);
+                                // Modifica la creación de la instancia Product para incluir la descripción y otros campos
+                                Product product = new Product("", name, price, imageUrl, "", "", null);
 
                                 db.collection("Productos")
                                         .add(product)
