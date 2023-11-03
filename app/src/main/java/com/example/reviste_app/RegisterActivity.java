@@ -121,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         databaseReference.child(userId).setValue(userData);
 
                                         Toast.makeText(RegisterActivity.this, "Cuenta creada :D", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LogOutActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
