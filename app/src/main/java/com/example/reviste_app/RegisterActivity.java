@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         birthdatePicker = findViewById(R.id.birthdatePicker);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBarLog);
-        imageButton = findViewById(R.id.imageButton);
+        imageButton = findViewById(R.id.btn_back);
 
         // Obtén el año actual
         Calendar calendar = Calendar.getInstance();

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -69,7 +69,6 @@
                         android:layout_width="248dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Nombre del Producto 1"
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -78,13 +77,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_semibold"
-                        android:text="12122321"
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_imagenes_adicionales"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -137,11 +136,10 @@
                     android:textSize="17dp" />
 
                 <TextView
-                    android:id="@+id/descripcion_producto_detalle"
+                    android:id="@+id/productDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Descripción del Producto 1"
                     android:textColor="@color/gris"
                     android:textSize="12dp" />
             </LinearLayout>
@@ -169,11 +167,10 @@
                     android:paddingLeft="20dp">
 
                     <TextView
-                        android:id="@+id/txt_nombrevendedor"
+                        android:id="@+id/sellerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Nombre del Vendedor 1"
                         android:textColor="@color/black" />
 
                     <TextView
