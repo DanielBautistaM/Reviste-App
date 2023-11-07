@@ -1,78 +1,47 @@
 package com.example.reviste_app;
 
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.bumptech.glide.Glide;
-
-import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class DetalleProductoActivity extends AppCompatActivity {
+    private ImageView productImageView;
+    private TextView productNameTextView;
+    private TextView productPriceTextView;
+    private TextView productDescriptionTextView;
+    private TextView productSellerNameTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_producto);
 
-        // Recupera los datos pasados desde la actividad principal
-        String productName = getIntent().getStringExtra("product_name");
-        String productPrice = getIntent().getStringExtra("product_price");
-        String productImage = getIntent().getStringExtra("product_image");
-        String productDescription = getIntent().getStringExtra("product_description");
-        List<String> additionalImages = getIntent().getStringArrayListExtra("product_additional_images");
-        String sellerName = getIntent().getStringExtra("product_seller_name");
+        // Initialize the UI elements
+        productImageView = findViewById(R.id.product_image);
+        productNameTextView = findViewById(R.id.product_name);
+        productPriceTextView = findViewById(R.id.product_price);
+        productDescriptionTextView = findViewById(R.id.product_description);
+        productSellerNameTextView = findViewById(R.id.product_seller_name);
 
-        // Vincula los elementos del diseño
-        ImageView imgProductoDetalle = findViewById(R.id.img_producto_detalle);
-        TextView nombreProductoDetalle = findViewById(R.id.nombre_producto_detalle);
-        TextView precioProductoDetalle = findViewById(R.id.precio_producto_detalle);
-        TextView descripcionProductoDetalle = findViewById(R.id.productDescription);
-        LinearLayout layoutImagenesAdicionales = findViewById(R.id.layout_imagenes_adicionales);
-        TextView txtNombreVendedor = findViewById(R.id.sellerName);
+        // Retrieve the product details from the intent
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String name = extras.getString("name");
+            String price = extras.getString("price");
+            String image = extras.getString("image");
+            String description = extras.getString("description");
+            String sellerName = extras.getString("sellerName");
 
-        // Configura los elementos con los datos del producto
-        nombreProductoDetalle.setText(productName);
-        precioProductoDetalle.setText(productPrice);
-        descripcionProductoDetalle.setText(productDescription);
-        txtNombreVendedor.setText(sellerName);
+            // Set the retrieved data to the UI elements
+            productNameTextView.setText(name);
+            productPriceTextView.setText(price);
+            productDescriptionTextView.setText(description);
+            productSellerNameTextView.setText(sellerName);
 
-        // Carga la imagen principal con Glide
-        Glide.with(this)
-                .load(productImage)
-                .into(imgProductoDetalle);
-
-        // Carga las imágenes adicionales (si las hay) en el layout horizontal
-        if (additionalImages != null) {
-            for (String imageUrl : additionalImages) {
-                ImageView imageView = new ImageView(this);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.setMargins(5, 0, 5, 0); // Margen entre las imágenes
-                imageView.setLayoutParams(layoutParams);
-                Glide.with(this)
-                        .load(imageUrl)
-                        .into(imageView);
-                layoutImagenesAdicionales.addView(imageView);
-            }
+            // Load the product image using a library like Picasso
+            Picasso.get().load(image).into(productImageView);
         }
-
-        // Vincula el botón de regreso
-        ImageButton btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Acción para volver a MainActivity
-                Intent intent = new Intent(DetalleProductoActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish(); // Cierra la actividad actual para evitar que quede en la pila hacia atrás
-            }
-        });
     }
 }

@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> productList = new ArrayList();
     private ProductAdapter adapter;
     private FirebaseFirestore db;
 
@@ -30,47 +29,39 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columnas
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns
         adapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
         retrieveDataFromFirestore();
 
-        // Agregar funcionalidad a los botones
-        ImageButton btnHome = findViewById(R.id.btnhome);
-        ImageButton btnPlus = findViewById(R.id.btnplus);
-        ImageButton btnCarrito = findViewById(R.id.btncarrito);
-
-        btnHome.setOnClickListener(new View.OnClickListener() {
+        // Handle item click events in the RecyclerView
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                // Agregar aquí la lógica para cambiar a la pantalla de inicio
-                // Por ejemplo:
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            public void onItemClick(View view, int position) {
+                // Retrieve the clicked product
+                Product product = productList.get(position);
+
+                // Create an intent to display the product details in DetalleProductoActivity
+                Intent intent = new Intent(MainActivity.this, DetalleProductoActivity.class);
+
+                // Pass the product details as extras in the intent
+                intent.putExtra("name", product.getName());
+                intent.putExtra("price", product.getPrice());
+                intent.putExtra("image", product.getImage());
+                intent.putExtra("description", product.getDescription());
+                intent.putExtra("sellerName", product.getSellerName());
+
+                // Start the DetalleProductoActivity
                 startActivity(intent);
             }
-        });
 
-        btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Agregar aquí la lógica para cambiar a la pantalla "Agregar"
-                // Por ejemplo:
-                Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
-                startActivity(intent);
+            public void onLongItemClick(View view, int position) {
+                // Handle long click events if needed
             }
-        });
-
-        btnCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Agregar aquí la lógica para cambiar a la pantalla del carrito
-                // Por ejemplo:
-                Intent intent = new Intent(MainActivity.this, LogOutActivity.class);
-                startActivity(intent);
-            }
-        });
+        }));
     }
 
     private void retrieveDataFromFirestore() {
@@ -84,15 +75,15 @@ public class MainActivity extends AppCompatActivity {
                             productList.add(product);
                         }
 
-                        // Notificar al adaptador que los datos han cambiado
+                        // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Firestore", "Error al obtener datos: " + e.getMessage());
-                        // Manejar errores
+                        Log.e("Firestore", "Error retrieving data: " + e.getMessage());
+                        // Handle errors
                     }
                 });
     }
