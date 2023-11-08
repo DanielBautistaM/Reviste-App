@@ -2,11 +2,11 @@ package com.example.reviste_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import com.squareup.picasso.Picasso;
 
 public class DetalleProductoActivity extends AppCompatActivity {
@@ -48,6 +48,20 @@ public class DetalleProductoActivity extends AppCompatActivity {
             // Initialize and set up the ViewPager for additional images
             adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages());
             viewPager.setAdapter(adapter);
+
+            // Set an OnClickListener for the product image to view it in full screen
+            productImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showImageFullScreen(product.getImage());
+                }
+            });
         }
+    }
+
+    public void showImageFullScreen(String imageUrl) {
+        Intent intent = new Intent(this, FullScreenImageActivity.class);
+        intent.putExtra("image_url", imageUrl);
+        startActivity(intent);
     }
 }

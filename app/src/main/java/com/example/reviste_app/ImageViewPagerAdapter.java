@@ -1,11 +1,14 @@
 package com.example.reviste_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageViewPagerAdapter extends PagerAdapter {
@@ -31,6 +34,15 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
         Picasso.get().load(images.get(position)).into(imageView);
+
+        // Agregar un evento de clic a la imagen
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImageFullScreen(images, position);
+            }
+        });
+
         container.addView(imageView);
         return imageView;
     }
@@ -38,5 +50,12 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((ImageView) object);
+    }
+
+    private void showImageFullScreen(List<String> imageUrls, int position) {
+        Intent intent = new Intent(context, FullScreenImageActivity.class);
+        intent.putStringArrayListExtra("image_urls", new ArrayList<>(imageUrls));
+        intent.putExtra("position", position);
+        context.startActivity(intent);
     }
 }

@@ -4,10 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.reviste_app.AddProductActivity;
+import com.example.reviste_app.DetalleProductoActivity;
+import com.example.reviste_app.LogOutActivity;
+import com.example.reviste_app.Product;
+import com.example.reviste_app.ProductAdapter;
+import com.example.reviste_app.R;
+import com.example.reviste_app.RecyclerItemClickListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private List<Product> productList = new ArrayList();
+    private List<Product> productList = new ArrayList<>();
     private ProductAdapter adapter;
     private FirebaseFirestore db;
 
@@ -34,6 +44,42 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         retrieveDataFromFirestore();
+
+        // Configura OnClickListener para el botón de inicio (Home)
+        ImageButton btnHome = findViewById(R.id.btnhome);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agrega aquí la acción que deseas para el botón de inicio (Home)
+                // Por ejemplo, puedes abrir una actividad principal o realizar alguna otra acción.
+                Intent addProductIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(addProductIntent);
+            }
+        });
+
+        // Configura OnClickListener para el botón de agregar producto (Plus)
+        ImageButton btnPlus = findViewById(R.id.btnplus);
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agrega aquí la acción que deseas para el botón de agregar producto (Plus)
+                // Por ejemplo, puedes abrir AddProductActivity.
+                Intent addProductIntent = new Intent(MainActivity.this, AddProductActivity.class);
+                startActivity(addProductIntent);
+            }
+        });
+
+        // Configura OnClickListener para el botón de carrito
+        ImageButton btnCarrito = findViewById(R.id.btncarrito);
+        btnCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Agrega aquí la acción que deseas para el botón de carrito
+                // Por ejemplo, puedes abrir LogOutActivity.
+                Intent logOutIntent = new Intent(MainActivity.this, LogOutActivity.class);
+                startActivity(logOutIntent);
+            }
+        });
 
         // Handle item click events in the RecyclerView
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
