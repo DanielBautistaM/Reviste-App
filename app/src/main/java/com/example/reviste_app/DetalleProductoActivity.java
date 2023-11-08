@@ -1,9 +1,12 @@
 package com.example.reviste_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.squareup.picasso.Picasso;
 
 public class DetalleProductoActivity extends AppCompatActivity {
@@ -12,6 +15,9 @@ public class DetalleProductoActivity extends AppCompatActivity {
     private TextView productPriceTextView;
     private TextView productDescriptionTextView;
     private TextView productSellerNameTextView;
+    private ViewPager viewPager;
+    private ImageViewPagerAdapter adapter;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,24 +30,24 @@ public class DetalleProductoActivity extends AppCompatActivity {
         productPriceTextView = findViewById(R.id.product_price);
         productDescriptionTextView = findViewById(R.id.product_description);
         productSellerNameTextView = findViewById(R.id.product_seller_name);
+        viewPager = findViewById(R.id.view_pager_additional_images);
 
         // Retrieve the product details from the intent
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String name = extras.getString("name");
-            String price = extras.getString("price");
-            String image = extras.getString("image");
-            String description = extras.getString("description");
-            String sellerName = extras.getString("sellerName");
+        product = getIntent().getParcelableExtra("product");
 
-            // Set the retrieved data to the UI elements
-            productNameTextView.setText(name);
-            productPriceTextView.setText(price);
-            productDescriptionTextView.setText(description);
-            productSellerNameTextView.setText(sellerName);
-
+        // Set the retrieved data to the UI elements
+        if (product != null) {
             // Load the product image using a library like Picasso
-            Picasso.get().load(image).into(productImageView);
+            Picasso.get().load(product.getImage()).into(productImageView);
+
+            productNameTextView.setText(product.getName());
+            productPriceTextView.setText(product.getPrice());
+            productDescriptionTextView.setText(product.getDescription());
+            productSellerNameTextView.setText(product.getSellerName());
+
+            // Initialize and set up the ViewPager for additional images
+            adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages());
+            viewPager.setAdapter(adapter);
         }
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,11 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, DetalleProductoActivity.class);
 
                 // Pass the product details as extras in the intent
-                intent.putExtra("name", product.getName());
-                intent.putExtra("price", product.getPrice());
-                intent.putExtra("image", product.getImage());
-                intent.putExtra("description", product.getDescription());
-                intent.putExtra("sellerName", product.getSellerName());
+                intent.putExtra("product", product);
 
                 // Start the DetalleProductoActivity
                 startActivity(intent);

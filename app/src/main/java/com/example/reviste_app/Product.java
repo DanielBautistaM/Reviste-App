@@ -1,14 +1,17 @@
 package com.example.reviste_app;
 
+
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.List;
 
-public class Product {
+public class Product implements Parcelable {
+    public String id;
     public String name;
     public String price;
     public String image;
     public String description;
     public String sellerName;
-    public String id;  // Campo para el ID del producto
     public List<String> additionalImages;
 
     public Product() {
@@ -24,6 +27,28 @@ public class Product {
         this.sellerName = sellerName;
         this.additionalImages = additionalImages;
     }
+
+    protected Product(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        price = in.readString();
+        image = in.readString();
+        description = in.readString();
+        sellerName = in.readString();
+        additionalImages = in.createStringArrayList();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -79,5 +104,21 @@ public class Product {
 
     public void setAdditionalImages(List<String> additionalImages) {
         this.additionalImages = additionalImages;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(image);
+        dest.writeString(description);
+        dest.writeString(sellerName);
+        dest.writeStringList(additionalImages);
     }
 }
