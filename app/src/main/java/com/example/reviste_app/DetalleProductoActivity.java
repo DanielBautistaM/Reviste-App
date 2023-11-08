@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import com.squareup.picasso.Picasso;
 
-public class DetalleProductoActivity extends AppCompatActivity {
+public class DetalleProductoActivity extends AppCompatActivity implements ImageViewPagerAdapter.OnImageClickListener {
     private ImageView productImageView;
     private TextView productNameTextView;
     private TextView productPriceTextView;
@@ -46,7 +46,7 @@ public class DetalleProductoActivity extends AppCompatActivity {
             productSellerNameTextView.setText(product.getSellerName());
 
             // Initialize and set up the ViewPager for additional images
-            adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages());
+            adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages(), this);
             viewPager.setAdapter(adapter);
 
             // Set an OnClickListener for the product image to view it in full screen
@@ -57,6 +57,12 @@ public class DetalleProductoActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onImageClick(String imageUrl) {
+        // Handle the click event to show the image in full screen
+        showImageFullScreen(imageUrl);
     }
 
     public void showImageFullScreen(String imageUrl) {

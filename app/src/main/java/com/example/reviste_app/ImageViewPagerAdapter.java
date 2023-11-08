@@ -14,10 +14,16 @@ import java.util.List;
 public class ImageViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<String> images;
+    private OnImageClickListener imageClickListener;
 
-    public ImageViewPagerAdapter(Context context, List<String> images) {
+    public interface OnImageClickListener {
+        void onImageClick(String imageUrl);
+    }
+
+    public ImageViewPagerAdapter(Context context, List<String> images, OnImageClickListener listener) {
         this.context = context;
         this.images = images;
+        this.imageClickListener = listener;
     }
 
     @Override
@@ -35,11 +41,13 @@ public class ImageViewPagerAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(context);
         Picasso.get().load(images.get(position)).into(imageView);
 
-        // Agregar un evento de clic a la imagen
+        // Set an OnClickListener for the image to show it in full screen
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImageFullScreen(images, position);
+                if (imageClickListener != null) {
+                    imageClickListener.onImageClick(images.get(position));
+                }
             }
         });
 
@@ -50,12 +58,5 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((ImageView) object);
-    }
-
-    private void showImageFullScreen(List<String> imageUrls, int position) {
-        Intent intent = new Intent(context, FullScreenImageActivity.class);
-        intent.putStringArrayListExtra("image_urls", new ArrayList<>(imageUrls));
-        intent.putExtra("position", position);
-        context.startActivity(intent);
     }
 }
