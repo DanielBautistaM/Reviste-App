@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import com.squareup.picasso.Picasso;
+import android.widget.ImageButton;
+
 
 public class DetalleProductoActivity extends AppCompatActivity implements ImageViewPagerAdapter.OnImageClickListener {
     private ImageView productImageView;
@@ -57,6 +59,18 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
                 }
             });
         }
+
+        // Initialize the ImageButton
+        ImageButton backButton = findViewById(R.id.imageButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to MainActivity when the ImageButton is clicked
+                Intent intent = new Intent(DetalleProductoActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

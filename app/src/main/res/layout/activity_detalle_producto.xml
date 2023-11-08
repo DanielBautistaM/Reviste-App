@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,34 +8,66 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/product_image"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:scaleType="centerInside"
-            android:clickable="true"
-            android:onClick="showImageFullScreen" />
+            android:layout_height="wrap_content"
+            android:background="@color/gris_images"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@color/gris_images"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="300dp"
+                android:layout_height="230dp"
+
+                android:clickable="true"
+                android:onClick="showImageFullScreen"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager_additional_images"
-                android:layout_width="match_parent"
-                android:layout_height="70dp" />
+            android:padding="25dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="25dp"
+                android:background="@color/gris_images"
+                android:orientation="vertical">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager_additional_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/product_name"
-                    android:layout_width="274dp"
+                    android:layout_width="286dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
                     android:text="Product Name"
@@ -46,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
+                    android:gravity="right"
                     android:text="Price: $0.00"
                     android:textColor="@color/verde"
                     android:textSize="16sp" />
@@ -92,22 +126,16 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/product_seller_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/product_seller_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/inter_semibold"
-                        android:paddingLeft="60dp"
-                        android:text="Seller: John Doe"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:paddingLeft="50dp"
+                    android:text="Seller: John Doe"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -116,5 +144,19 @@
         <!-- Reducido el tamaño del ViewPager -->
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_comprar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#9775FA"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:text="Añadir Al Carrito"
+        android:textColor="#FFFFFF"
+        android:textSize="17dp"
+        android:layout_alignParentBottom="true" />
+
+
 </RelativeLayout>
 
