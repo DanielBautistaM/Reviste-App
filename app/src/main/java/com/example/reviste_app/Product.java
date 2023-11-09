@@ -9,22 +9,24 @@ public class Product implements Parcelable {
     public String name;
     public String price;
     public String image;
-    public String description;  // Agregar campo de descripción
+    public String description;
     public String sellerName;
     public List<String> additionalImages;
+    private float ratings; // Nuevo campo de calificación
 
     public Product() {
         // Constructor sin argumentos requerido para Firestore
     }
 
-    public Product(String id, String name, String price, String image, String description, String sellerName, List<String> additionalImages) {
+    public Product(String id, String name, String price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
-        this.description = description;  // Inicializar el campo de descripción
+        this.description = description;
         this.sellerName = sellerName;
         this.additionalImages = additionalImages;
+        this.ratings = ratings; // Inicializar el campo de calificación
     }
 
     protected Product(Parcel in) {
@@ -35,6 +37,7 @@ public class Product implements Parcelable {
         description = in.readString();
         sellerName = in.readString();
         additionalImages = in.createStringArrayList();
+        ratings = in.readFloat(); // Leer el valor de calificación desde el parcel
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -105,6 +108,14 @@ public class Product implements Parcelable {
         this.additionalImages = additionalImages;
     }
 
+    public float getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(float ratings) {
+        this.ratings = ratings;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -119,5 +130,6 @@ public class Product implements Parcelable {
         dest.writeString(description);
         dest.writeString(sellerName);
         dest.writeStringList(additionalImages);
+        dest.writeFloat(ratings); // Escribir el valor de calificación en el parcel
     }
 }

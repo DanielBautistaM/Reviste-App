@@ -167,7 +167,8 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Product product = new Product("", name, price, imageUrl, description, "", additionalImages);
+            float initialRatings = 0.0f; // Establece la calificación inicial como 0.0 o cualquier otro valor adecuado
+            Product product = new Product("", name, price, imageUrl, description, "", additionalImages, initialRatings);
 
             db.collection("Productos")
                     .add(product)
