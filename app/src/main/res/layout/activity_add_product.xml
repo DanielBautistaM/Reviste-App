@@ -11,13 +11,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/imgProductImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="60dp"
+            android:layout_height="100dp"
             android:background="@color/gris_buttons"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/camera_svgrepo_com" />
@@ -26,13 +25,14 @@
             android:id="@+id/btnUploadImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:text="Cargar Imagen" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="1dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Producto:"
             android:textColor="@color/black"
@@ -42,13 +42,14 @@
             android:id="@+id/etProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Precio:"
             android:textColor="@color/black"
@@ -58,14 +59,14 @@
             android:id="@+id/etProductPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:textColor="@color/black" />
 
-        <!-- Agregar campo de descripción -->
         <TextView
             android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Descripción:"
             android:textColor="@color/black"
@@ -75,13 +76,44 @@
             android:id="@+id/etProductDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:textColor="@color/black" />
+
+        <!-- Botones para cargar imágenes adicionales -->
+        <Button
+            android:id="@+id/btnUploadAdditionalImage1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Cargar Imagen Adicional 1" />
+
+        <Button
+            android:id="@+id/btnUploadAdditionalImage2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Cargar Imagen Adicional 2" />
+
+        <Button
+            android:id="@+id/btnUploadAdditionalImage3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Cargar Imagen Adicional 3" />
+
+        <Button
+            android:id="@+id/btnUploadAdditionalImage4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Cargar Imagen Adicional 4" />
 
         <Button
             android:id="@+id/btnAddProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="1dp"
             android:text="Agregar Producto" />
     </LinearLayout>
 </LinearLayout>
+
