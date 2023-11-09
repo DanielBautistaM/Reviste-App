@@ -79,6 +79,12 @@
             android:layout_marginTop="1dp"
             android:textColor="@color/black" />
 
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp" />
+
         <!-- Botones para cargar imágenes adicionales -->
         <Button
             android:id="@+id/btnUploadAdditionalImage1"
@@ -116,4 +122,3 @@
             android:text="Agregar Producto" />
     </LinearLayout>
 </LinearLayout>
-
