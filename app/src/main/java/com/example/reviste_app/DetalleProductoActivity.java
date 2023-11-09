@@ -47,9 +47,12 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
             productDescriptionTextView.setText(product.getDescription());
             productSellerNameTextView.setText(product.getSellerName());
 
-            // Initialize and set up the ViewPager for additional images
-            adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages(), this);
-            viewPager.setAdapter(adapter);
+            // Check if additional images are available
+            if (product.getAdditionalImages() != null && !product.getAdditionalImages().isEmpty()) {
+                // Initialize and set up the ViewPager for additional images
+                adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages(), this);
+                viewPager.setAdapter(adapter);
+            }
 
             // Set an OnClickListener for the product image to view it in full screen
             productImageView.setOnClickListener(new View.OnClickListener() {

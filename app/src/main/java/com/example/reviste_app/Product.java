@@ -1,6 +1,5 @@
 package com.example.reviste_app;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.List;
@@ -10,7 +9,7 @@ public class Product implements Parcelable {
     public String name;
     public String price;
     public String image;
-    public String description;
+    public String description;  // Agregar campo de descripción
     public String sellerName;
     public List<String> additionalImages;
 
@@ -23,7 +22,7 @@ public class Product implements Parcelable {
         this.name = name;
         this.price = price;
         this.image = image;
-        this.description = description;
+        this.description = description;  // Inicializar el campo de descripción
         this.sellerName = sellerName;
         this.additionalImages = additionalImages;
     }

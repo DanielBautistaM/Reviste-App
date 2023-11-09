@@ -1,4 +1,4 @@
-<!-- res/layout/activity_add_product.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,7 +21,6 @@
             android:background="@color/gris_buttons"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/camera_svgrepo_com" />
-
 
         <Button
             android:id="@+id/btnUploadImage"
@@ -61,6 +60,23 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black" />
 
+        <!-- Agregar campo de descripción -->
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Descripción:"
+            android:textColor="@color/black"
+            android:textSize="19dp" />
+
+        <EditText
+            android:id="@+id/etProductDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
+
         <Button
             android:id="@+id/btnAddProduct"
             android:layout_width="match_parent"
@@ -68,5 +84,4 @@
             android:layout_marginTop="20dp"
             android:text="Agregar Producto" />
     </LinearLayout>
-
 </LinearLayout>

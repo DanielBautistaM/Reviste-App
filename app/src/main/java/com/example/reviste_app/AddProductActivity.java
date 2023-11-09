@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class AddProductActivity extends AppCompatActivity {
-    private EditText etProductName, etProductPrice;
+    private EditText etProductName, etProductPrice, etProductDescription;
     private ImageView imgProductImage;
     private Button btnUploadImage, btnAddProduct;
     private Uri imageUri;
@@ -33,6 +33,7 @@ public class AddProductActivity extends AppCompatActivity {
 
         etProductName = findViewById(R.id.etProductName);
         etProductPrice = findViewById(R.id.etProductPrice);
+        etProductDescription = findViewById(R.id.etProductDescription);
         imgProductImage = findViewById(R.id.imgProductImage);
         btnUploadImage = findViewById(R.id.btnUploadImage);
         btnAddProduct = findViewById(R.id.btnAddProduct);
@@ -54,12 +55,13 @@ public class AddProductActivity extends AppCompatActivity {
 
                     String name = etProductName.getText().toString();
                     String price = etProductPrice.getText().toString();
+                    String description = etProductDescription.getText().toString();
 
-                    if (name.isEmpty() || price.isEmpty() || imageUri == null) {
+                    if (name.isEmpty() || price.isEmpty() || description.isEmpty() || imageUri == null) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
                     } else {
-                        uploadImageToStorage(name, price, imageUri);
+                        uploadImageToStorage(name, price, description, imageUri);
                     }
                 }
             }
@@ -81,7 +83,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImageToStorage(final String name, final String price, Uri imageUri) {
+    private void uploadImageToStorage(final String name, final String price, final String description, Uri imageUri) {
         String imageName = "products/" + System.currentTimeMillis() + ".jpg";
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
@@ -95,8 +97,7 @@ public class AddProductActivity extends AppCompatActivity {
                             public void onSuccess(Uri downloadUrl) {
                                 String imageUrl = downloadUrl.toString();
 
-                                // Modifica la creación de la instancia Product para incluir la descripción y otros campos
-                                Product product = new Product("", name, price, imageUrl, "", "", null);
+                                Product product = new Product("", name, price, imageUrl, description, "", null);
 
                                 db.collection("Productos")
                                         .add(product)
