@@ -3,6 +3,7 @@ package com.example.reviste_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
     private TextView productPriceTextView;
     private TextView productDescriptionTextView;
     private TextView productSellerNameTextView;
-    private RatingBar productRatingBar; // Asegúrate de que el ID coincida en el archivo XML
+    private RatingBar productRatingBar;
     private ViewPager viewPager;
     private ImageViewPagerAdapter adapter;
     private Product product;
@@ -32,7 +33,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
         productPriceTextView = findViewById(R.id.product_price);
         productDescriptionTextView = findViewById(R.id.product_description);
         productSellerNameTextView = findViewById(R.id.product_seller_name);
-        productRatingBar = findViewById(R.id.product_rating_bar); // Asegúrate de que el ID coincida con el que tienes en el archivo XML
+        productRatingBar = findViewById(R.id.product_rating_bar);
         viewPager = findViewById(R.id.view_pager_additional_images);
 
         // Retrieve the product details from the intent
@@ -58,7 +59,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
             // Set the product rating from Firestore
             productRatingBar.setRating(product.getRatings());
 
-            // Deshabilita el RatingBar para que no se pueda interactuar con él
+            // Disable the RatingBar so it cannot be interacted with
             productRatingBar.setIsIndicator(true);
 
             // Set an OnClickListener for the product image to view it in full screen
@@ -66,6 +67,21 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
                 @Override
                 public void onClick(View v) {
                     showImageFullScreen(product.getImage());
+                }
+            });
+
+            // Get a reference to the ImageButton for going back to MainActivity
+            ImageButton backButton = findViewById(R.id.imageButton);
+
+            // Set an OnClickListener for the back button
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create an Intent to return to the MainActivity
+                    Intent intent = new Intent(DetalleProductoActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    // Ensure the user cannot return to this activity by pressing the "Back" button
+                    finish();
                 }
             });
         }

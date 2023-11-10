@@ -20,12 +20,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddProductActivity extends AppCompatActivity {
-    private EditText etProductName, etProductPrice, etProductDescription;
+    private EditText etProductName, etProductPrice, etProductDescription, etSellerName;
     private ImageView imgProductImage;
     private Button btnUploadImage, btnAddProduct;
     private Button[] btnUploadAdditionalImages = new Button[4];
@@ -46,6 +45,7 @@ public class AddProductActivity extends AppCompatActivity {
         etProductName = findViewById(R.id.etProductName);
         etProductPrice = findViewById(R.id.etProductPrice);
         etProductDescription = findViewById(R.id.etProductDescription);
+        etSellerName = findViewById(R.id.etSellerName); // Agrega un EditText para el nombre del vendedor
         imgProductImage = findViewById(R.id.imgProductImage);
         btnUploadImage = findViewById(R.id.btnUploadImage);
         btnAddProduct = findViewById(R.id.btnAddProduct);
@@ -101,12 +101,13 @@ public class AddProductActivity extends AppCompatActivity {
                     String name = etProductName.getText().toString();
                     String price = etProductPrice.getText().toString();
                     String description = etProductDescription.getText().toString();
+                    String sellerName = etSellerName.getText().toString(); // Obtén el nombre del vendedor desde un EditText
 
                     if (name.isEmpty() || price.isEmpty() || description.isEmpty() || imageUri == null || selectedRating == null) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
                     } else {
-                        uploadProductData(name, price, description, rating);
+                        uploadProductData(name, price, description, rating, sellerName); // Pasa el nombre del vendedor
                     }
                 }
             }
@@ -138,7 +139,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProductData(final String name, final String price, final String description, final float rating) {
+    private void uploadProductData(final String name, final String price, final String description, final float rating, final String sellerName) {
         String imageName = "products/" + System.currentTimeMillis() + ".jpg";
 
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
@@ -153,7 +154,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 String imageUrl = downloadUrl.toString();
 
                                 final List<String> additionalImages = new ArrayList<>();
-                                uploadAdditionalImages(name, price, description, imageUrl, additionalImages, 0);
+                                uploadAdditionalImages(name, price, description, imageUrl, additionalImages, 0, sellerName);
                             }
                         });
                     }
@@ -167,7 +168,7 @@ public class AddProductActivity extends AppCompatActivity {
                 });
     }
 
-    private void uploadAdditionalImages(final String name, final String price, final String description, final String imageUrl, final List<String> additionalImages, final int index) {
+    private void uploadAdditionalImages(final String name, final String price, final String description, final String imageUrl, final List<String> additionalImages, final int index, final String sellerName) {
         if (index < 4 && additionalImageUris[index] != null) {
             String imageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
             final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
@@ -181,7 +182,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 public void onSuccess(Uri downloadUrl) {
                                     String additionalImageUrl = downloadUrl.toString();
                                     additionalImages.add(additionalImageUrl);
-                                    uploadAdditionalImages(name, price, description, imageUrl, additionalImages, index + 1);
+                                    uploadAdditionalImages(name, price, description, imageUrl, additionalImages, index + 1, sellerName);
                                 }
                             });
                         }
@@ -194,7 +195,7 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Product product = new Product("", name, price, imageUrl, description, "", additionalImages, rating);
+            Product product = new Product("", name, price, imageUrl, description, sellerName, additionalImages, rating);
 
             db.collection("Productos")
                     .add(product)

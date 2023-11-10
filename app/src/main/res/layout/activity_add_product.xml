@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/imgProductImage"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="10dp"
             android:background="@color/gris_buttons"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/camera_svgrepo_com" />
@@ -84,6 +84,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
+
+        <!-- Agrega un EditText para el nombre del vendedor -->
+        <TextView
+            android:id="@+id/textViewSellerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Nombre del Vendedor:"
+            android:textColor="@color/black"
+            android:textSize="19dp" />
+
+        <EditText
+            android:id="@+id/etSellerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/black" />
 
         <!-- Botones para cargar imágenes adicionales -->
         <Button
