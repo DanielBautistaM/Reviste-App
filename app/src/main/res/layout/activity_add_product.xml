@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/imgProductImage"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:background="@color/gris_buttons"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/camera_svgrepo_com" />
@@ -85,13 +85,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
-
+        <!-- Botones para cargar imágenes adicionales -->
         <Button
             android:id="@+id/btnUploadAdditionalImage1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="Cargar Imagen Adicional 1" />
+
+        <!-- Vista previa para la imagen adicional 1 -->
+        <ImageView
+            android:id="@+id/imgPreview1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/gris_buttons"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/camera_svgrepo_com" />
 
         <Button
             android:id="@+id/btnUploadAdditionalImage2"
@@ -100,6 +109,15 @@
             android:layout_marginTop="1dp"
             android:text="Cargar Imagen Adicional 2" />
 
+        <!-- Vista previa para la imagen adicional 2 -->
+        <ImageView
+            android:id="@+id/imgPreview2"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/gris_buttons"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/camera_svgrepo_com" />
+
         <Button
             android:id="@+id/btnUploadAdditionalImage3"
             android:layout_width="match_parent"
@@ -107,12 +125,30 @@
             android:layout_marginTop="1dp"
             android:text="Cargar Imagen Adicional 3" />
 
+        <!-- Vista previa para la imagen adicional 3 -->
+        <ImageView
+            android:id="@+id/imgPreview3"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/gris_buttons"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/camera_svgrepo_com" />
+
         <Button
             android:id="@+id/btnUploadAdditionalImage4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="Cargar Imagen Adicional 4" />
+
+        <!-- Vista previa para la imagen adicional 4 -->
+        <ImageView
+            android:id="@+id/imgPreview4"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/gris_buttons"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/camera_svgrepo_com" />
 
         <Button
             android:id="@+id/btnAddProduct"

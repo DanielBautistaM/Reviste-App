@@ -29,6 +29,7 @@ public class AddProductActivity extends AppCompatActivity {
     private ImageView imgProductImage;
     private Button btnUploadImage, btnAddProduct;
     private Button[] btnUploadAdditionalImages = new Button[4];
+    private ImageView[] imgPreviewAdditionalImages = new ImageView[4];
     private Spinner spinnerRating;
     private Uri imageUri;
     private Uri[] additionalImageUris = new Uri[4];
@@ -77,6 +78,10 @@ public class AddProductActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             int buttonId = getResources().getIdentifier("btnUploadAdditionalImage" + (i + 1), "id", getPackageName());
             btnUploadAdditionalImages[i] = findViewById(buttonId);
+
+            int imgPreviewId = getResources().getIdentifier("imgPreview" + (i + 1), "id", getPackageName());
+            imgPreviewAdditionalImages[i] = findViewById(imgPreviewId);
+
             final int index = i;
             btnUploadAdditionalImages[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,6 +134,7 @@ public class AddProductActivity extends AppCompatActivity {
         } else if (requestCode >= 2 && requestCode <= 5 && resultCode == RESULT_OK && data != null) {
             int index = requestCode - 2;
             additionalImageUris[index] = data.getData();
+            imgPreviewAdditionalImages[index].setImageURI(additionalImageUris[index]);
         }
     }
 
@@ -144,7 +150,7 @@ public class AddProductActivity extends AppCompatActivity {
                         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri downloadUrl) {
-                                final String imageUrl = downloadUrl.toString();
+                                String imageUrl = downloadUrl.toString();
 
                                 final List<String> additionalImages = new ArrayList<>();
                                 uploadAdditionalImages(name, price, description, imageUrl, additionalImages, 0);
