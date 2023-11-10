@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -79,13 +78,14 @@
             android:layout_marginTop="1dp"
             android:textColor="@color/black" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
+        <!-- Spinner para la calificación -->
+        <Spinner
+            android:id="@+id/spinnerRating"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Botones para cargar imágenes adicionales -->
+
         <Button
             android:id="@+id/btnUploadAdditionalImage1"
             android:layout_width="match_parent"

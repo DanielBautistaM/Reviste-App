@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +29,13 @@ public class AddProductActivity extends AppCompatActivity {
     private ImageView imgProductImage;
     private Button btnUploadImage, btnAddProduct;
     private Button[] btnUploadAdditionalImages = new Button[4];
+    private Spinner spinnerRating;
     private Uri imageUri;
     private Uri[] additionalImageUris = new Uri[4];
     private FirebaseFirestore db;
     private boolean isCreatingProduct = false;
+    private float rating = 0.0f; // Variable de calificación
+    private String selectedRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,23 @@ public class AddProductActivity extends AppCompatActivity {
         btnUploadImage = findViewById(R.id.btnUploadImage);
         btnAddProduct = findViewById(R.id.btnAddProduct);
         db = FirebaseFirestore.getInstance();
+        spinnerRating = findViewById(R.id.spinnerRating);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratings_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRating.setAdapter(adapter);
+
+        spinnerRating.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedRating = adapter.getItem(position).toString();
+                rating = Float.parseFloat(selectedRating);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
 
         btnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +74,6 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
-        // Configurar controladores de eventos para cargar imágenes adicionales
         for (int i = 0; i < 4; i++) {
             int buttonId = getResources().getIdentifier("btnUploadAdditionalImage" + (i + 1), "id", getPackageName());
             btnUploadAdditionalImages[i] = findViewById(buttonId);
@@ -75,11 +97,11 @@ public class AddProductActivity extends AppCompatActivity {
                     String price = etProductPrice.getText().toString();
                     String description = etProductDescription.getText().toString();
 
-                    if (name.isEmpty() || price.isEmpty() || description.isEmpty() || imageUri == null) {
+                    if (name.isEmpty() || price.isEmpty() || description.isEmpty() || imageUri == null || selectedRating == null) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
                     } else {
-                        uploadProductData(name, price, description);
+                        uploadProductData(name, price, description, rating);
                     }
                 }
             }
@@ -110,7 +132,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProductData(final String name, final String price, final String description) {
+    private void uploadProductData(final String name, final String price, final String description, final float rating) {
         String imageName = "products/" + System.currentTimeMillis() + ".jpg";
 
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
@@ -122,11 +144,10 @@ public class AddProductActivity extends AppCompatActivity {
                         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri downloadUrl) {
-                                final String imageUrl = downloadUrl.toString(); // Definir la variable imageUrl
+                                final String imageUrl = downloadUrl.toString();
 
-                                // Crea una lista para almacenar las URLs de las imágenes adicionales
                                 final List<String> additionalImages = new ArrayList<>();
-                                uploadAdditionalImages(name, price, description, imageUrl, additionalImages, 0); // Comenzar la carga de imágenes adicionales
+                                uploadAdditionalImages(name, price, description, imageUrl, additionalImages, 0);
                             }
                         });
                     }
@@ -167,8 +188,7 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            float initialRatings = 0.0f; // Establece la calificación inicial como 0.0 o cualquier otro valor adecuado
-            Product product = new Product("", name, price, imageUrl, description, "", additionalImages, initialRatings);
+            Product product = new Product("", name, price, imageUrl, description, "", additionalImages, rating);
 
             db.collection("Productos")
                     .add(product)

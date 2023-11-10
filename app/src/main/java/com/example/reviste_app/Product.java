@@ -12,7 +12,7 @@ public class Product implements Parcelable {
     public String description;
     public String sellerName;
     public List<String> additionalImages;
-    private float ratings; // Nuevo campo de calificación
+    public float ratings; // Campo de calificación
 
     public Product() {
         // Constructor sin argumentos requerido para Firestore
