@@ -10,169 +10,308 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp">
 
-        <ImageView
-            android:id="@+id/imgProductImage"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/gris_buttons"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/camera_svgrepo_com" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnUploadImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Cargar Imagen" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Producto:"
-            android:textColor="@color/black"
-            android:textSize="19dp" />
+                <ImageView
+                    android:id="@+id/imgProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/gris_buttons"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/camera_svgrepo_com" />
 
-        <EditText
-            android:id="@+id/etProductName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="@color/black" />
+                <Button
+                    android:id="@+id/btnUploadImage"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:backgroundTint="@color/principal_color"
+                    android:text="@string/add"
+                    android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Precio:"
-            android:textColor="@color/black"
-            android:textSize="19dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etProductPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="@color/black" />
+                    <LinearLayout
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Descripción:"
-            android:textColor="@color/black"
-            android:textSize="19dp" />
+                        <ImageView
+                            android:id="@+id/imgPreview1"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/gris_buttons"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/camera_svgrepo_com" />
 
-        <EditText
-            android:id="@+id/etProductDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="@color/black" />
+                        <Button
+                            android:id="@+id/btnUploadAdditionalImage1"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="1dp"
+                            android:backgroundTint="@color/principal_color"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textSize="15sp" />
 
-        <!-- Spinner para la calificación -->
-        <Spinner
-            android:id="@+id/spinnerRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+                    </LinearLayout>
 
-        <!-- Agrega un EditText para el nombre del vendedor -->
-        <TextView
-            android:id="@+id/textViewSellerName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Nombre del Vendedor:"
-            android:textColor="@color/black"
-            android:textSize="19dp" />
+                    <LinearLayout
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etSellerName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="@color/black" />
+                        <ImageView
+                            android:id="@+id/imgPreview2"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/gris_buttons"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/camera_svgrepo_com" />
 
-        <!-- Botones para cargar imágenes adicionales -->
-        <Button
-            android:id="@+id/btnUploadAdditionalImage1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Cargar Imagen Adicional 1" />
+                        <Button
+                            android:id="@+id/btnUploadAdditionalImage2"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="1dp"
+                            android:backgroundTint="@color/principal_color"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textSize="15sp" />
 
-        <!-- Vista previa para la imagen adicional 1 -->
-        <ImageView
-            android:id="@+id/imgPreview1"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/gris_buttons"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/camera_svgrepo_com" />
+                    </LinearLayout>
 
-        <Button
-            android:id="@+id/btnUploadAdditionalImage2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Cargar Imagen Adicional 2" />
+                    <LinearLayout
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-        <!-- Vista previa para la imagen adicional 2 -->
-        <ImageView
-            android:id="@+id/imgPreview2"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/gris_buttons"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/camera_svgrepo_com" />
+                        <ImageView
+                            android:id="@+id/imgPreview3"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/gris_buttons"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/camera_svgrepo_com" />
 
-        <Button
-            android:id="@+id/btnUploadAdditionalImage3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Cargar Imagen Adicional 3" />
+                        <Button
+                            android:id="@+id/btnUploadAdditionalImage3"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="1dp"
+                            android:backgroundTint="@color/principal_color"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textSize="15sp" />
 
-        <!-- Vista previa para la imagen adicional 3 -->
-        <ImageView
-            android:id="@+id/imgPreview3"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/gris_buttons"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/camera_svgrepo_com" />
+                    </LinearLayout>
 
-        <Button
-            android:id="@+id/btnUploadAdditionalImage4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Cargar Imagen Adicional 4" />
+                    <LinearLayout
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-        <!-- Vista previa para la imagen adicional 4 -->
-        <ImageView
-            android:id="@+id/imgPreview4"
+                        <ImageView
+                            android:id="@+id/imgPreview4"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/gris_buttons"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/camera_svgrepo_com" />
+
+                        <Button
+                            android:id="@+id/btnUploadAdditionalImage4"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="1dp"
+                            android:backgroundTint="@color/principal_color"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/gris_buttons"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/camera_svgrepo_com" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Producto:"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+            <EditText
+                android:id="@+id/etProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/grisClaro"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Precio:"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+            <EditText
+                android:id="@+id/etProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/grisClaro"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Descripción:"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+            <EditText
+                android:id="@+id/etProductDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/grisClaro"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Estado de la Prenda:"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+            <Spinner
+                android:id="@+id/spinnerRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSellerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Nombre del Vendedor:"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
+
+            <EditText
+                android:id="@+id/etSellerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@color/grisClaro"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnAddProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:backgroundTint="@color/principal_color"
             android:text="Agregar Producto" />
+
+        <!-- Spinner para la calificación -->
+
+        <!-- Agrega un EditText para el nombre del vendedor -->
+
+        <!-- Botones para cargar imágenes adicionales -->
+
+        <!-- Vista previa para la imagen adicional 1 -->
+
+        <!-- Vista previa para la imagen adicional 2 -->
+
+        <!-- Vista previa para la imagen adicional 3 -->
+
+        <!-- Vista previa para la imagen adicional 4 -->
+
     </LinearLayout>
 </LinearLayout>
