@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
@@ -36,7 +37,6 @@
             android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@color/principal_color"
-            android:paddingLeft="30dp"
             android:src="@drawable/vector" />
 
         <ImageButton
@@ -53,8 +53,16 @@
             android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@color/principal_color"
-            android:paddingRight="30dp"
             android:src="@drawable/bag" />
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/principal_color"
+            android:text="Filtrar"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

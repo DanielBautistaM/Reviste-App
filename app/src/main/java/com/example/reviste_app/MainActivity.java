@@ -1,28 +1,30 @@
 package com.example.reviste_app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.reviste_app.AddProductActivity;
-import com.example.reviste_app.DetalleProductoActivity;
-import com.example.reviste_app.LogOutActivity;
 import com.example.reviste_app.Product;
 import com.example.reviste_app.ProductAdapter;
 import com.example.reviste_app.R;
-import com.example.reviste_app.RecyclerItemClickListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Configura OnClickListener para el botón de filtrar
+        Button btnFilter = findViewById(R.id.btnFilter);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterDialog();
+            }
+        });
+
         // Handle item click events in the RecyclerView
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -111,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        productList.clear(); // Clear previous data
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Product product = document.toObject(Product.class);
                             productList.add(product);
@@ -124,6 +136,60 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("Firestore", "Error retrieving data: " + e.getMessage());
+                        // Handle errors
+                    }
+                });
+    }
+
+    // Método para mostrar el cuadro de diálogo de filtro
+    private void showFilterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_price_filter, null);
+        builder.setView(view);
+
+        final EditText etMinPrice = view.findViewById(R.id.etMinPrice);
+        final EditText etMaxPrice = view.findViewById(R.id.etMaxPrice);
+
+        builder.setPositiveButton("Filtrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Obtén los valores ingresados por el usuario
+                double minPrice = Double.parseDouble(etMinPrice.getText().toString());
+                double maxPrice = Double.parseDouble(etMaxPrice.getText().toString());
+
+                // Aplica el filtro
+                retrieveDataFromFirestore(minPrice, maxPrice);
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", null);
+
+        builder.show();
+    }
+
+    // Overloaded method for retrieving filtered data
+    private void retrieveDataFromFirestore(double minPrice, double maxPrice) {
+        db.collection("Productos")
+                .whereGreaterThanOrEqualTo("price", minPrice)
+                .whereLessThanOrEqualTo("price", maxPrice)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        productList.clear(); // Clear previous data
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Product product = document.toObject(Product.class);
+                            productList.add(product);
+                        }
+
+                        // Notify the adapter that the data has changed
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Firestore", "Error retrieving filtered data: " + e.getMessage());
                         // Handle errors
                     }
                 });
