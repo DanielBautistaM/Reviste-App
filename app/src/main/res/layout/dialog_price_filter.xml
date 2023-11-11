@@ -17,4 +17,11 @@
         android:layout_height="wrap_content"
         android:hint="Precio máximo"
         android:inputType="numberDecimal" />
+
+    <!-- Botón para eliminar el filtro -->
+    <Button
+        android:id="@+id/btnClearFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar Filtro" />
 </LinearLayout>
