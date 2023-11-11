@@ -7,18 +7,18 @@ import java.util.List;
 public class Product implements Parcelable {
     public String id;
     public String name;
-    public String price;
+    public Double price; // Cambiado a Double
     public String image;
     public String description;
     public String sellerName;
     public List<String> additionalImages;
-    public float ratings; // Campo de calificación
+    public float ratings;
 
     public Product() {
         // Constructor sin argumentos requerido para Firestore
     }
 
-    public Product(String id, String name, String price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
+    public Product(String id, String name, Double price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -26,18 +26,19 @@ public class Product implements Parcelable {
         this.description = description;
         this.sellerName = sellerName;
         this.additionalImages = additionalImages;
-        this.ratings = ratings; // Inicializar el campo de calificación
+        this.ratings = ratings;
     }
 
     protected Product(Parcel in) {
         id = in.readString();
         name = in.readString();
-        price = in.readString();
+        // Cambiado para leer el valor de price como Double
+        price = in.readDouble();
         image = in.readString();
         description = in.readString();
         sellerName = in.readString();
         additionalImages = in.createStringArrayList();
-        ratings = in.readFloat(); // Leer el valor de calificación desde el parcel
+        ratings = in.readFloat();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -64,11 +65,11 @@ public class Product implements Parcelable {
         this.name = name;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -125,11 +126,12 @@ public class Product implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(name);
-        dest.writeString(price);
+        // Cambiado para escribir el valor de price como Double
+        dest.writeDouble(price);
         dest.writeString(image);
         dest.writeString(description);
         dest.writeString(sellerName);
         dest.writeStringList(additionalImages);
-        dest.writeFloat(ratings); // Escribir el valor de calificación en el parcel
+        dest.writeFloat(ratings);
     }
 }

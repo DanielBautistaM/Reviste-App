@@ -45,7 +45,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
             Picasso.get().load(product.getImage()).into(productImageView);
 
             productNameTextView.setText(product.getName());
-            productPriceTextView.setText(product.getPrice());
+            productPriceTextView.setText(String.valueOf(product.getPrice()));
             productDescriptionTextView.setText(product.getDescription());
             productSellerNameTextView.setText(product.getSellerName());
 

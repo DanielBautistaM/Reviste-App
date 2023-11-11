@@ -34,7 +34,7 @@ public class AddProductActivity extends AppCompatActivity {
     private Uri[] additionalImageUris = new Uri[4];
     private FirebaseFirestore db;
     private boolean isCreatingProduct = false;
-    private float rating = 0.0f; // Variable de calificación
+    private float rating = 0.0f;
     private String selectedRating;
 
     @Override
@@ -45,7 +45,7 @@ public class AddProductActivity extends AppCompatActivity {
         etProductName = findViewById(R.id.etProductName);
         etProductPrice = findViewById(R.id.etProductPrice);
         etProductDescription = findViewById(R.id.etProductDescription);
-        etSellerName = findViewById(R.id.etSellerName); // Agrega un EditText para el nombre del vendedor
+        etSellerName = findViewById(R.id.etSellerName);
         imgProductImage = findViewById(R.id.imgProductImage);
         btnUploadImage = findViewById(R.id.btnUploadImage);
         btnAddProduct = findViewById(R.id.btnAddProduct);
@@ -99,15 +99,16 @@ public class AddProductActivity extends AppCompatActivity {
                     btnAddProduct.setEnabled(false);
 
                     String name = etProductName.getText().toString();
-                    String price = etProductPrice.getText().toString();
+                    // Cambiado para parsear el precio como Double
+                    Double price = Double.parseDouble(etProductPrice.getText().toString());
                     String description = etProductDescription.getText().toString();
-                    String sellerName = etSellerName.getText().toString(); // Obtén el nombre del vendedor desde un EditText
+                    String sellerName = etSellerName.getText().toString();
 
-                    if (name.isEmpty() || price.isEmpty() || description.isEmpty() || imageUri == null || selectedRating == null) {
+                    if (name.isEmpty() || description.isEmpty() || imageUri == null || selectedRating == null) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
                     } else {
-                        uploadProductData(name, price, description, rating, sellerName); // Pasa el nombre del vendedor
+                        uploadProductData(name, price, description, rating, sellerName);
                     }
                 }
             }
@@ -139,7 +140,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProductData(final String name, final String price, final String description, final float rating, final String sellerName) {
+    private void uploadProductData(final String name, final Double price, final String description, final float rating, final String sellerName) {
         String imageName = "products/" + System.currentTimeMillis() + ".jpg";
 
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
@@ -168,7 +169,7 @@ public class AddProductActivity extends AppCompatActivity {
                 });
     }
 
-    private void uploadAdditionalImages(final String name, final String price, final String description, final String imageUrl, final List<String> additionalImages, final int index, final String sellerName) {
+    private void uploadAdditionalImages(final String name, final Double price, final String description, final String imageUrl, final List<String> additionalImages, final int index, final String sellerName) {
         if (index < 4 && additionalImageUris[index] != null) {
             String imageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
             final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);

@@ -34,7 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         // Configura los elementos de la vista (nombre, precio, etc.)
         holder.nameProduct.setText(product.getName());
-        holder.priceProduct.setText(product.getPrice());
+        holder.priceProduct.setText(String.valueOf(product.getPrice()));
 
         // Cargando la imagen con Glide
         Glide.with(context)

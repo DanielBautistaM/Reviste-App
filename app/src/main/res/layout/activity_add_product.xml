@@ -202,13 +202,13 @@
                 android:textColor="@color/black"
                 android:textSize="19dp" />
 
+
             <EditText
                 android:id="@+id/etProductPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
                 android:backgroundTint="@color/grisClaro"
-                android:textColor="@color/black" />
+                android:inputType="numberDecimal" />
 
         </LinearLayout>
 
@@ -299,19 +299,7 @@
             android:backgroundTint="@color/principal_color"
             android:text="Agregar Producto" />
 
-        <!-- Spinner para la calificación -->
 
-        <!-- Agrega un EditText para el nombre del vendedor -->
-
-        <!-- Botones para cargar imágenes adicionales -->
-
-        <!-- Vista previa para la imagen adicional 1 -->
-
-        <!-- Vista previa para la imagen adicional 2 -->
-
-        <!-- Vista previa para la imagen adicional 3 -->
-
-        <!-- Vista previa para la imagen adicional 4 -->
 
     </LinearLayout>
 </LinearLayout>
