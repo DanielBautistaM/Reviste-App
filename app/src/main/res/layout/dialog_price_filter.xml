@@ -4,6 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <CheckBox
+        android:id="@+id/chkEnablePriceFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Habilitar filtro de precio" />
+
     <EditText
         android:id="@+id/etMinPrice"
         android:layout_width="match_parent"
@@ -18,10 +24,21 @@
         android:hint="Precio máximo"
         android:inputType="numberDecimal" />
 
-    <!-- Botón para eliminar el filtro -->
+    <CheckBox
+        android:id="@+id/chkEnableRatingFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Habilitar filtro de clasificación" />
+
+    <Spinner
+        android:id="@+id/spinnerRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
     <Button
         android:id="@+id/btnClearFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Eliminar Filtro" />
+        android:text="Limpiar filtro" />
 </LinearLayout>

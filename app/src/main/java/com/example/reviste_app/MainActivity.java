@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,9 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.reviste_app.Product;
-import com.example.reviste_app.ProductAdapter;
-import com.example.reviste_app.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,20 +33,23 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private FirebaseFirestore db;
 
+    private Double minPriceFilter = null;
+    private Double maxPriceFilter = null;
+    private Float ratingFilter = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
         retrieveDataFromFirestore();
 
-        // Configura OnClickListener para el botón de inicio (Home)
         ImageButton btnHome = findViewById(R.id.btnhome);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
                         productList.clear();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Product product = document.toObject(Product.class);
-                            productList.add(product);
+                            if (passesFilters(product)) {
+                                productList.add(product);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -121,60 +125,83 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private boolean passesFilters(Product product) {
+        boolean pricePassesFilter = (minPriceFilter == null || product.getPrice() >= minPriceFilter) &&
+                (maxPriceFilter == null || product.getPrice() <= maxPriceFilter);
+
+        boolean ratingPassesFilter = ratingFilter == null || Math.abs(product.getRatings() - ratingFilter) < 0.001;
+
+        return pricePassesFilter && ratingPassesFilter;
+    }
+
     private void showFilterDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_price_filter, null);
         builder.setView(view);
 
+        final CheckBox chkEnablePriceFilter = view.findViewById(R.id.chkEnablePriceFilter);
         final EditText etMinPrice = view.findViewById(R.id.etMinPrice);
         final EditText etMaxPrice = view.findViewById(R.id.etMaxPrice);
+
+        final CheckBox chkEnableRatingFilter = view.findViewById(R.id.chkEnableRatingFilter);
+        Spinner spinnerRating = view.findViewById(R.id.spinnerRating);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratings_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRating.setAdapter(adapter);
+
+        Button btnClearFilter = view.findViewById(R.id.btnClearFilter);
 
         builder.setPositiveButton("Filtrar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                double minPrice = etMinPrice.getText().toString().isEmpty() ? Double.MIN_VALUE : Double.parseDouble(etMinPrice.getText().toString());
-                double maxPrice = etMaxPrice.getText().toString().isEmpty() ? Double.MAX_VALUE : Double.parseDouble(etMaxPrice.getText().toString());
+                // Verifica si la casilla de precio está marcada
+                if (chkEnablePriceFilter.isChecked()) {
+                    // Aplica los filtros de precio solo si la casilla está marcada
+                    minPriceFilter = etMinPrice.getText().toString().isEmpty() ? null : Double.parseDouble(etMinPrice.getText().toString());
+                    maxPriceFilter = etMaxPrice.getText().toString().isEmpty() ? null : Double.parseDouble(etMaxPrice.getText().toString());
+                } else {
+                    // Restablece los filtros de precio a sus valores iniciales si la casilla no está marcada
+                    minPriceFilter = null;
+                    maxPriceFilter = null;
+                }
 
-                retrieveDataFromFirestore(minPrice, maxPrice);
+                // Verifica si la casilla de clasificación está marcada
+                if (chkEnableRatingFilter.isChecked()) {
+                    // Aplica el filtro de clasificación solo si la casilla está marcada
+                    ratingFilter = spinnerRating.getSelectedItem().toString().equals("Sin filtro") ? null : Float.parseFloat(spinnerRating.getSelectedItem().toString());
+                } else {
+                    // Restablece el filtro de clasificación a su valor inicial si la casilla no está marcada
+                    ratingFilter = null;
+                }
+
+                // Actualiza la lista de productos según los nuevos filtros
+                updateFilteredProducts();
             }
         });
 
         builder.setNegativeButton("Cancelar", null);
 
-        Button btnClearFilter = view.findViewById(R.id.btnClearFilter);
         btnClearFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Restablece los filtros a sus valores iniciales
                 etMinPrice.setText("");
                 etMaxPrice.setText("");
-                retrieveDataFromFirestore();
+                spinnerRating.setSelection(0);
+                chkEnablePriceFilter.setChecked(false);
+                chkEnableRatingFilter.setChecked(false);
+                // Limpia los filtros y actualiza la lista de productos
+                minPriceFilter = null;
+                maxPriceFilter = null;
+                ratingFilter = null;
+                updateFilteredProducts();
             }
         });
 
         builder.show();
     }
 
-    private void retrieveDataFromFirestore(double minPrice, double maxPrice) {
-        db.collection("Productos")
-                .whereGreaterThanOrEqualTo("price", minPrice)
-                .whereLessThanOrEqualTo("price", maxPrice)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        productList.clear();
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            Product product = document.toObject(Product.class);
-                            productList.add(product);
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Firestore", "Error retrieving filtered data: " + e.getMessage());
-                    }
-                });
+    private void updateFilteredProducts() {
+        retrieveDataFromFirestore();
     }
 }
