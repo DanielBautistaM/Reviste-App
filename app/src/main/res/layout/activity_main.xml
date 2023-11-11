@@ -7,7 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".MainActivity">
 
-<!-- Primer Texto -->
+    <!-- Primer Texto -->
     <TextView
         android:id="@+id/textView1"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@ tools:context=".MainActivity">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!-- Segundo Texto -->
+    <!-- Segundo Texto -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
@@ -35,6 +35,19 @@ tools:context=".MainActivity">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+    <!-- ImageButton para dirigir a LogOutActivity -->
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/back"
+        android:scaleX="-1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!-- RecyclerView -->
 <androidx.recyclerview.widget.RecyclerView

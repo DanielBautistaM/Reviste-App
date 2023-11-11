@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -70,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton btnCarrito = findViewById(R.id.btncarrito);
         btnCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent logOutIntent = new Intent(MainActivity.this, LogOutActivity.class);
+                startActivity(logOutIntent);
+            }
+        });
+
+        // ImageButton para dirigir a LogOutActivity
+        ImageButton btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent logOutIntent = new Intent(MainActivity.this, LogOutActivity.class);
