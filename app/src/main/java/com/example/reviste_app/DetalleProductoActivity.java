@@ -68,7 +68,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
                 @Override
                 public void onClick(View v) {
                     // Crear un nuevo CartItem y agregarlo al carrito
-                    CartItem cartItem = new CartItem(product.getId(), product.getName(), 1, product.getPrice());
+                    CartItem cartItem = new CartItem(product.getId(), product.getName(), 1, product.getPrice().doubleValue(), product.getImage());
                     CartManager.addToCart(cartItem);
 
                     // Mostrar un mensaje o realizar otras acciones después de agregar al carrito
