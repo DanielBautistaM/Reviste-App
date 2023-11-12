@@ -3,6 +3,7 @@ package com.example.reviste_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -10,18 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class DetalleProductoActivity extends AppCompatActivity implements ImageViewPagerAdapter.OnImageClickListener {
-    private ImageView productImageView;
-    private TextView productNameTextView;
-    private TextView productPriceTextView;
-    private TextView productDescriptionTextView;
-    private TextView productSellerNameTextView;
-    private RatingBar productRatingBar;
-    private ViewPager viewPager;
-    private ImageViewPagerAdapter adapter;
+
     private Product product;
 
     @Override
@@ -29,13 +24,13 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_producto);
 
-        productImageView = findViewById(R.id.product_image);
-        productNameTextView = findViewById(R.id.product_name);
-        productPriceTextView = findViewById(R.id.product_price);
-        productDescriptionTextView = findViewById(R.id.product_description);
-        productSellerNameTextView = findViewById(R.id.product_seller_name);
-        productRatingBar = findViewById(R.id.product_rating_bar);
-        viewPager = findViewById(R.id.view_pager_additional_images);
+        ImageView productImageView = findViewById(R.id.product_image);
+        TextView productNameTextView = findViewById(R.id.product_name);
+        TextView productPriceTextView = findViewById(R.id.product_price);
+        TextView productDescriptionTextView = findViewById(R.id.product_description);
+        TextView productSellerNameTextView = findViewById(R.id.product_seller_name);
+        RatingBar productRatingBar = findViewById(R.id.product_rating_bar);
+        ViewPager viewPager = findViewById(R.id.view_pager_additional_images);
 
         product = getIntent().getParcelableExtra("product");
 
@@ -48,7 +43,7 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
             productSellerNameTextView.setText(product.getSellerName());
 
             if (product.getAdditionalImages() != null && !product.getAdditionalImages().isEmpty()) {
-                adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages(), this);
+                ImageViewPagerAdapter adapter = new ImageViewPagerAdapter(this, product.getAdditionalImages(), this);
                 viewPager.setAdapter(adapter);
             }
 
@@ -62,8 +57,8 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
                 }
             });
 
-            TextView addToCartTextView = findViewById(R.id.btn_comprar);
-            addToCartTextView.setOnClickListener(new View.OnClickListener() {
+            TextView addToCartButton = findViewById(R.id.btn_comprar);
+            addToCartButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Verificar si el producto ya está en el carrito
