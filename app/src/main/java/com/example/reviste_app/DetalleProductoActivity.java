@@ -1,6 +1,5 @@
 package com.example.reviste_app;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -67,12 +66,25 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
             addToCartTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Crear un nuevo CartItem y agregarlo al carrito
-                    CartItem cartItem = new CartItem(product.getId(), product.getName(), 1, product.getPrice().doubleValue(), product.getImage());
-                    CartManager.addToCart(cartItem);
+                    // Verificar si el producto ya está en el carrito
+                    boolean productInCart = false;
+                    for (CartItem item : CartManager.getCartItems()) {
+                        if (item.getProductId().equals(product.getId())) {
+                            productInCart = true;
+                            break;
+                        }
+                    }
 
-                    // Mostrar un mensaje o realizar otras acciones después de agregar al carrito
-                    Toast.makeText(DetalleProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
+                    if (!productInCart) {
+                        // El producto no está en el carrito, agregarlo
+                        CartItem cartItem = new CartItem(product.getId(), product.getName(), 1, product.getPrice().doubleValue(), product.getImage());
+                        CartManager.addToCart(cartItem);
+                        // Mostrar un mensaje o realizar otras acciones después de agregar al carrito
+                        Toast.makeText(DetalleProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // El producto ya está en el carrito, mostrar un mensaje o realizar otras acciones
+                        Toast.makeText(DetalleProductoActivity.this, "El producto ya está en el carrito", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -99,3 +111,4 @@ public class DetalleProductoActivity extends AppCompatActivity implements ImageV
         startActivity(intent);
     }
 }
+

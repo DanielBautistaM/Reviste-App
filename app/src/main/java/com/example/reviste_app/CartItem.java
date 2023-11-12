@@ -1,6 +1,4 @@
 package com.example.reviste_app;
-
-// CartItem.java
 public class CartItem {
     private String productId;
     private String productName;
@@ -34,5 +32,10 @@ public class CartItem {
 
     public double getPrice() {
         return price;
+    }
+
+    // Add this method to update the quantity
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
