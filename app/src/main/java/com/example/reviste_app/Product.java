@@ -18,8 +18,8 @@ public class Product implements Parcelable {
         // Constructor sin argumentos requerido para Firestore
     }
 
-    public Product(String id, String name, Double price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
-        this.id = id;
+    // Constructor sin el parámetro 'id'
+    public Product(String name, Double price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
         this.name = name;
         this.price = price;
         this.image = image;
@@ -55,6 +55,10 @@ public class Product implements Parcelable {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -95,10 +99,6 @@ public class Product implements Parcelable {
 
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public List<String> getAdditionalImages() {

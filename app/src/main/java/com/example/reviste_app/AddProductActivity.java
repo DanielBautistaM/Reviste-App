@@ -196,16 +196,32 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Product product = new Product("", name, price, imageUrl, description, sellerName, additionalImages, rating);
+            // Ahora, creamos un producto sin proporcionar el ID
+            Product product = new Product(name, price, imageUrl, description, sellerName, additionalImages, rating);
 
+            // Agregamos el producto a Firestore
             db.collection("Productos")
                     .add(product)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            Intent intent = new Intent(AddProductActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                            // Actualizamos el ID después de agregar el producto
+                            documentReference.update("id", documentReference.getId())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Intent intent = new Intent(AddProductActivity.this, MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            isCreatingProduct = false;
+                                            btnAddProduct.setEnabled(true);
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
