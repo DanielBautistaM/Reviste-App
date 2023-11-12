@@ -1,5 +1,6 @@
 package com.example.reviste_app;
 
+// MainActivity.java
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private Double minPriceFilter = null;
     private Double maxPriceFilter = null;
     private Float ratingFilter = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logOutIntent = new Intent(MainActivity.this, LogOutActivity.class);
+                Intent logOutIntent = new Intent(MainActivity.this, CarritoActivity.class);
                 startActivity(logOutIntent);
             }
         });
@@ -216,3 +218,4 @@ public class MainActivity extends AppCompatActivity {
         retrieveDataFromFirestore();
     }
 }
+
