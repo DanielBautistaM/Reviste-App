@@ -2,8 +2,8 @@ package com.example.reviste_app;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,8 +21,8 @@ public class FormularioPagoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_pago);
 
-        Button btnConfirmarPago = findViewById(R.id.btnConfirmarPago);
-        btnConfirmarPago.setOnClickListener(new View.OnClickListener() {
+        TextView btnTarjeta = findViewById(R.id.btn_tarjeta);
+        btnTarjeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 confirmarPago();
@@ -43,7 +43,26 @@ public class FormularioPagoActivity extends AppCompatActivity {
         String anioVencimientoStr = etAnioVencimiento.getText().toString();
         String cvv = etCVV.getText().toString();
 
-        // Validar la información de pago (puedes agregar más validaciones según sea necesario)
+        // Validar la longitud de los campos
+        if (numeroTarjeta.length() != 16) {
+            etNumeroTarjeta.setError("La tarjeta debe tener 18 caracteres");
+            return;
+        }
+
+        if (mesVencimientoStr.length() != 2) {
+            etMesVencimiento.setError("El mes debe tener 2 caracteres");
+            return;
+        }
+
+        if (anioVencimientoStr.length() != 4) {
+            etAnioVencimiento.setError("El año debe tener 4 caracteres");
+            return;
+        }
+
+        if (cvv.length() != 3) {
+            etCVV.setError("El CVV debe tener 3 caracteres");
+            return;
+        }
 
         // Convertir los valores de mes y año a enteros
         int mesVencimiento = Integer.parseInt(mesVencimientoStr);

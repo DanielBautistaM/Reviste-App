@@ -1,51 +1,63 @@
 <!-- res/layout/activity_formulario_pago.xml -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <EditText
-        android:id="@+id/etNumeroTarjeta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Número de Tarjeta"
-        android:inputType="number"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_tarjeta"
+        android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etMesVencimiento"
-            android:layout_width="0dp"
+            android:id="@+id/etNumeroTarjeta"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Mes"
-            android:inputType="number"/>
+            android:hint="Número de Tarjeta"
+            android:inputType="number" />
 
         <EditText
-            android:id="@+id/etAnioVencimiento"
-            android:layout_width="0dp"
+            android:id="@+id/etCVV"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Año"
-            android:inputType="number"/>
+            android:hint="CVV"
+            android:inputType="number" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etMesVencimiento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Mes"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/etAnioVencimiento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Año"
+                android:inputType="number" />
+        </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etCVV"
+    <TextView
+        android:id="@+id/btn_tarjeta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="CVV"
-        android:inputType="number"/>
-
-    <Button
-        android:id="@+id/btnConfirmarPago"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirmar Pago"/>
-</LinearLayout>
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#9775FA"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:text="Añadir Metodo de Pago"
+        android:textColor="#FFFFFF"
+        android:textSize="17dp" />
+</RelativeLayout>
