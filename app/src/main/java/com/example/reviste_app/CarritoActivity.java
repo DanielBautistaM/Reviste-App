@@ -2,13 +2,16 @@ package com.example.reviste_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class CarritoActivity extends AppCompatActivity implements CartItemAdapter.OnRemoveItemClickListener {
@@ -40,6 +43,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("CarritoActivity", "Botón 'Realizar Pedido' clickeado");
                 double cartTotal = CartManager.getCartTotal();
                 Toast.makeText(CarritoActivity.this, "Pedido realizado. Total: $" + cartTotal, Toast.LENGTH_SHORT).show();
                 cartItems.clear();
@@ -54,6 +58,16 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
             public void onClick(View v) {
                 // Abre la nueva actividad de dirección
                 Intent intent = new Intent(CarritoActivity.this, DireccionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btnPagar = findViewById(R.id.btnPagar);
+        btnPagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abre la nueva actividad de pago
+                Intent intent = new Intent(CarritoActivity.this, FormularioPagoActivity.class);
                 startActivity(intent);
             }
         });
