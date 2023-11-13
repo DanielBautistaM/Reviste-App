@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
@@ -31,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.email_Log);
         editTextPassword = findViewById(R.id.password_Log);
-        buttonLog = findViewById(R.id.btn_register);
+        buttonLog = findViewById(R.id.btnSaveAddress);
         progressBar = findViewById(R.id.progressBarLog);
         registerButton = findViewById(R.id.register_button);
 

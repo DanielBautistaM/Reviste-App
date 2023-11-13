@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:fontFamily="@font/inter"
-                    android:text="Nombre de Envío: "
+                    android:text="Añadir "
                     android:textColor="@color/gris"
                     android:textSize="18sp" />
 
@@ -118,7 +118,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:fontFamily="@font/inter"
-                    android:text="Departamento: "
                     android:textColor="@color/gris"
                     android:textSize="16sp" />
 
@@ -167,12 +166,17 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/checkout_button"
+    <TextView
+        android:id="@+id/btnCarrito"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#9775FA"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:paddingBottom="20dp"
         android:text="Realizar Pedido"
-        android:layout_gravity="bottom"
-        android:padding="16dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="17sp" />
 
 </LinearLayout>

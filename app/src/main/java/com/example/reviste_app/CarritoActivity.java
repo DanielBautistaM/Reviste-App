@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +35,9 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
         tvDepartamento = findViewById(R.id.tvDepartamento);
 
-        Button checkoutButton = findViewById(R.id.checkout_button);
-        checkoutButton.setOnClickListener(new View.OnClickListener() {
+        TextView btnCarrito = findViewById(R.id.btnCarrito);
+
+        btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double cartTotal = CartManager.getCartTotal();

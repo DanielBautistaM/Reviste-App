@@ -3,8 +3,9 @@ package com.example.reviste_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class DireccionActivity extends AppCompatActivity {
 
     private EditText edtNombre, edtDepartamento, edtMunicipio, edtTelefono, edtDireccion, edtCodigoPostal;
-    private Button btnSaveAddress;
+    private TextView btnSaveAddress;
+    private ImageButton backButton; // Agregado ImageButton
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,16 @@ public class DireccionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 guardarInformacionDeEnvio();
+            }
+        });
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navegar a CarritoActivity
+                Intent intent = new Intent(DireccionActivity.this, CarritoActivity.class);
+                startActivity(intent);
             }
         });
     }

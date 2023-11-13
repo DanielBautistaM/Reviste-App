@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         fullnameEditText = findViewById(R.id.fullname);
         birthdatePicker = findViewById(R.id.birthdatePicker);
-        buttonReg = findViewById(R.id.btn_register);
+        buttonReg = findViewById(R.id.btnSaveAddress);
         progressBar = findViewById(R.id.progressBarLog);
         imageButton = findViewById(R.id.btn_back);
 

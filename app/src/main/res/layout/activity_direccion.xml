@@ -3,60 +3,204 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edtNombre"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <EditText
-        android:id="@+id/edtDepartamento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtNombre"
-        android:layout_marginTop="16dp"
-        android:hint="Departamento" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/edtMunicipio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtDepartamento"
-        android:layout_marginTop="16dp"
-        android:hint="Municipio" />
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="56dp"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/back" />
 
-    <EditText
-        android:id="@+id/edtTelefono"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtMunicipio"
-        android:layout_marginTop="16dp"
-        android:inputType="phone"
-        android:hint="Número de Teléfono" />
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Direccion"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
-    <EditText
-        android:id="@+id/edtDireccion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtTelefono"
-        android:layout_marginTop="16dp"
-        android:hint="Dirección" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtCodigoPostal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtDireccion"
-        android:layout_marginTop="16dp"
-        android:inputType="number"
-        android:hint="Código Postal" />
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Nombre"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <Button
+            <EditText
+                android:id="@+id/edtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/grisClaro" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Departamento"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/edtDepartamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:backgroundTint="@color/grisClaro" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Municipio"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/edtMunicipio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:backgroundTint="@color/grisClaro" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Numero de Telefono"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/grisClaro"
+                android:inputType="phone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Direccion"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/grisClaro" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Codigo Postal"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtCodigoPostal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/grisClaro"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/btnSaveAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtCodigoPostal"
-        android:layout_marginTop="16dp"
-        android:text="Guardar" />
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#9775FA"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:text="Guardar Direccion"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp" />
 
 </RelativeLayout>

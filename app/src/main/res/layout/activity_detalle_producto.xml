@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:backgroundTint="#FF981F">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,19 +69,18 @@
 
                 <TextView
                     android:id="@+id/product_name"
-                    android:layout_width="252dp"
+                    android:layout_width="254dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_semibold"
+                    android:fontFamily="@font/inter_bold"
                     android:text="Product Name"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:gravity="right"
                     android:text="Price: $0.00"
                     android:textColor="@color/verde"
                     android:textSize="18dp" />
@@ -96,9 +96,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/inter_bold"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Estado"
-                    android:textSize="20sp" />
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
                 <RatingBar
                     android:id="@+id/product_rating_bar"
@@ -106,9 +107,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#FF981F"
+                    android:backgroundTint="@color/star"
                     android:isIndicator="false"
                     android:numStars="5"
+                    android:progressTint="@color/star"
                     android:rating="0"
                     android:stepSize="1" />
 
@@ -124,10 +126,10 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_bold"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Descripcion"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/product_description"
@@ -150,10 +152,10 @@
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_bold"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Vendedor"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/product_seller_name"
@@ -178,13 +180,13 @@
         android:id="@+id/btn_comprar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
         android:background="#9775FA"
         android:gravity="center"
         android:paddingBottom="20dp"
         android:text="Añadir Al Carrito"
         android:textColor="#FFFFFF"
-        android:textSize="17dp"
-        android:layout_alignParentBottom="true" />
+        android:textSize="17dp" />
 
 
 </RelativeLayout>

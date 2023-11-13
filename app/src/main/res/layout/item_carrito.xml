@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/inter_bold"
+                android:fontFamily="@font/inter_semibold"
                 android:text="Nombre del Producto"
                 android:textColor="@color/black"
                 android:textSize="16sp"
