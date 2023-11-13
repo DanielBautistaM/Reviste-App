@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -48,11 +49,16 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+        <!-- Reemplaza con el recurso de tu imagen -->
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
+        />
+
         <TextView
             android:id="@+id/tvDireccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="20dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Dirección"
             android:textColor="@color/black"
@@ -67,7 +73,7 @@
             android:id="@+id/btnAddAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="30dp"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/arrow___right_2" />
 
@@ -80,22 +86,52 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvNombreDireccion"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nombre de Envío: "
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvDepartamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Departamento: "
-            android:textSize="16sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/group_23" />
 
-        <!-- Agrega más TextViews según sea necesario para mostrar otros detalles de la dirección -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvNombreDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/inter"
+                    android:text="Nombre de Envío: "
+                    android:textColor="@color/gris"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvDepartamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/inter"
+                    android:text="Departamento: "
+                    android:textColor="@color/gris"
+                    android:textSize="16sp" />
+
+                <!-- Agrega más TextView según sea necesario para mostrar otros detalles de la dirección -->
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Reemplaza con el recurso de tu imagen -->
+        android:layout_marginRight="10dp" <!-- Ajusta según sea necesario --><![CDATA[
+        />
+
+        ]]>
     </LinearLayout>
 
     <RelativeLayout
@@ -138,4 +174,5 @@
         android:text="Realizar Pedido"
         android:layout_gravity="bottom"
         android:padding="16dp" />
+
 </LinearLayout>
