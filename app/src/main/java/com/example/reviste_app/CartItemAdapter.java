@@ -6,12 +6,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder> {
@@ -35,7 +32,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         CartItem cartItem = cartItems.get(position);
         holder.productNameTextView.setText(cartItem.getProductName());
         holder.priceTextView.setText(String.valueOf(cartItem.getPrice()));
-
         Picasso.get().load(cartItem.getProductImage()).into(holder.productImageView);
     }
 
@@ -71,7 +67,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         }
     }
 
-    // Interface for the remove item click listener
     public interface OnRemoveItemClickListener {
         void onRemoveItemClick(int position);
     }

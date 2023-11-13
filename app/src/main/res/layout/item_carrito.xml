@@ -28,16 +28,22 @@
                 android:id="@+id/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_bold"
                 android:text="Nombre del Producto"
-                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter"
                 android:text="Precio"
-                android:textSize="16sp" />
+                android:textColor="@color/gris"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <Button
