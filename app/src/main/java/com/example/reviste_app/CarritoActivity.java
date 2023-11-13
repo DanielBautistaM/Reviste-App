@@ -17,6 +17,8 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private List<CartItem> cartItems;
     private TextView cartTotalTextView;
     private CartItemAdapter adapter;
+    private TextView tvNombreDireccion;
+    private TextView tvDepartamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         cartTotalTextView = findViewById(R.id.cart_total_text);
+        tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
+        tvDepartamento = findViewById(R.id.tvDepartamento);
 
         Button checkoutButton = findViewById(R.id.checkout_button);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +57,18 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                 startActivity(intent);
             }
         });
+
+        // Recibir información de dirección y departamento
+        Intent intent = getIntent();
+        if (intent != null) {
+            String nombreDireccion = intent.getStringExtra("nombre");
+            String departamentoDireccion = intent.getStringExtra("departamento");
+
+            if (nombreDireccion != null && departamentoDireccion != null) {
+                tvNombreDireccion.setText(nombreDireccion);
+                tvDepartamento.setText(departamentoDireccion);
+            }
+        }
 
         updateCartTotalText();
     }

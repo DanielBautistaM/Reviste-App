@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,6 +70,31 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/arrow___right_2" />
+
+    </LinearLayout>
+
+    <!-- Sección adicional para mostrar la dirección -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvNombreDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre de Envío: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDepartamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Departamento: "
+            android:textSize="16sp" />
+
+        <!-- Agrega más TextViews según sea necesario para mostrar otros detalles de la dirección -->
 
     </LinearLayout>
 

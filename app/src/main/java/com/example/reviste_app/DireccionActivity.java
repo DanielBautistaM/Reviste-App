@@ -1,6 +1,6 @@
-// DireccionActivity.java
 package com.example.reviste_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,20 +56,26 @@ public class DireccionActivity extends AppCompatActivity {
         CollectionReference infoEnvioCollection = db.collection("informacionEnvios");
 
         // Usar un ID único generado automáticamente por Firestore
-// Usar un ID único generado automáticamente por Firestore
         infoEnvioCollection
                 .add(direccionObj)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(DireccionActivity.this, "Información de envío guardada exitosamente", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(DireccionActivity.this, "Información de envío guardada exitosamente", Toast.LENGTH_SHORT).show();
+                            // Obtener el ID del documento recién creado
+                            String docId = task.getResult().getId();
+
+                            // Enviar la información de dirección de vuelta a CarritoActivity
+                            Intent intent = new Intent(DireccionActivity.this, CarritoActivity.class);
+                            intent.putExtra("nombre", direccion);
+                            intent.putExtra("departamento", departamento);
+                            startActivity(intent);
                             finish(); // Cerrar la actividad después de guardar exitosamente
                         } else {
                             Toast.makeText(DireccionActivity.this, "Error al guardar la información de envío: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
     }
 }
