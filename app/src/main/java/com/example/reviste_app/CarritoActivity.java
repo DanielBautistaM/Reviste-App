@@ -1,11 +1,13 @@
 package com.example.reviste_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
@@ -39,6 +41,16 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                 cartItems.clear();
                 adapter.notifyDataSetChanged();
                 updateCartTotalText();
+            }
+        });
+
+        ImageButton btnAddAddress = findViewById(R.id.btnAddAddress);
+        btnAddAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abre la nueva actividad de dirección
+                Intent intent = new Intent(CarritoActivity.this, DireccionActivity.class);
+                startActivity(intent);
             }
         });
 
