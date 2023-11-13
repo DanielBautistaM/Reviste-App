@@ -35,21 +35,17 @@ public class RegisterActivity extends AppCompatActivity {
     DatePicker birthdatePicker;
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        // Check if the user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        // Clear the cart when a new user registers
+        CartManager.clearCart();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);

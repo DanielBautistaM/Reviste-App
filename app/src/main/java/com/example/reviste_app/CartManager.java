@@ -50,4 +50,10 @@ public class CartManager {
     public static void updateCartTotal(double newTotal) {
         cartTotal = newTotal;
     }
+
+    public static void clearCart() {
+        cartItems.clear();
+        cartTotal = 0.0;
+        lastRemovedItem = null;
+    }
 }

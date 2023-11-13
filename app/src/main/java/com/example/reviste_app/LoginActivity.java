@@ -2,7 +2,6 @@ package com.example.reviste_app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,17 +17,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText editTextEmail, editTextPassword;
-    TextView buttonLog, registerButton;
-    FirebaseAuth mAuth;
-    ProgressBar progressBar;
+    private EditText editTextEmail, editTextPassword;
+    private TextView buttonLog, registerButton;
+    private ProgressBar progressBar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
 
         editTextEmail = findViewById(R.id.email_Log);
