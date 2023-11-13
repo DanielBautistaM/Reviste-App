@@ -1,6 +1,5 @@
 package com.example.reviste_app;
 
-// MainActivity.java
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -218,4 +217,3 @@ public class MainActivity extends AppCompatActivity {
         retrieveDataFromFirestore();
     }
 }
-

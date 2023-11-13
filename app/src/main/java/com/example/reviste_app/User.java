@@ -48,4 +48,3 @@ public class User {
         this.birthdate = birthdate;
     }
 }
-

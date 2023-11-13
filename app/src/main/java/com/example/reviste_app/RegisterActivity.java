@@ -15,12 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
@@ -111,19 +112,31 @@ public class RegisterActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
 
                                 if (task.isSuccessful()) {
-                                    // Registro exitoso, ahora guardamos los datos adicionales en Firebase Realtime Database.
+                                    // Registro exitoso, ahora guardamos los datos adicionales en Cloud Firestore.
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     if (user != null) {
                                         String userId = user.getUid();
                                         User userData = new User(username, email, fullname, birthdate);
 
-                                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-                                        databaseReference.child(userId).setValue(userData);
-
-                                        Toast.makeText(RegisterActivity.this, "Cuenta creada :D", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        // Cambia a Firestore para guardar datos de usuario
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        db.collection("users").document(userId)
+                                                .set(userData)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(RegisterActivity.this, "Cuenta creada :D", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(RegisterActivity.this, "Error al registrar en Firestore", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
                                     } else {
                                         // Manejar el caso en el que no se pueda obtener el usuario actual.
                                         Toast.makeText(RegisterActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
