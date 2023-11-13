@@ -58,6 +58,16 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
             }
         });
 
+        ImageButton backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navegar de vuelta a la actividad principal (MainActivity)
+                Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Recibir información de dirección y departamento
         Intent intent = getIntent();
         if (intent != null) {
