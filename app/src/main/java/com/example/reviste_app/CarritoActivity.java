@@ -6,17 +6,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.List;
 
 public class CarritoActivity extends AppCompatActivity implements CartItemAdapter.OnRemoveItemClickListener {
@@ -27,7 +23,6 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private TextView tvNombreDireccion;
     private TextView tvDepartamento;
     private TextView tvPaymentInfo;
-
     private AddressManager addressManager;
     private PaymentInfoManager paymentInfoManager;
 
@@ -35,27 +30,20 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrito);
-
         addressManager = new AddressManager(this);
         paymentInfoManager = new PaymentInfoManager(this);
-
         cartItems = CartManager.getCartItems();
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view_carrito);
         adapter = new CartItemAdapter(cartItems, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         cartTotalTextView = findViewById(R.id.cart_total_text);
         tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
         tvDepartamento = findViewById(R.id.tvDepartamento);
         tvPaymentInfo = findViewById(R.id.tvPaymentInfo);
-
         setupButtons();
         displaySavedData();
-
         handleIntentExtras();
-
         updateCartTotalText();
     }
 
@@ -67,6 +55,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                 if (isAddressAndPaymentInfoProvided()) {
                     double cartTotal = CartManager.getCartTotal();
                     Toast.makeText(CarritoActivity.this, "Pedido realizado. Total: $" + cartTotal, Toast.LENGTH_SHORT).show();
+                    markProductsAsPurchased();
                     cartItems.clear();
                     adapter.notifyDataSetChanged();
                     updateCartTotalText();
@@ -161,6 +150,19 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         cartTotalTextView.setText("$" + cartTotal);
     }
 
+    private void markProductsAsPurchased() {
+        for (CartItem cartItem : cartItems) {
+            String productId = cartItem.getProductId();
+            updateProductPurchasedStatusInFirestore(productId);
+        }
+    }
+
+    private void updateProductPurchasedStatusInFirestore(String productId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Productos").document(productId)
+                .update("isPurchased", true);
+    }
+
     private void fetchPaymentInfo(String documentId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("pagos").document(documentId).get()
@@ -173,12 +175,6 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                         } else {
                             Toast.makeText(CarritoActivity.this, "No se encontró la información de pago", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CarritoActivity.this, "Error al obtener la información de pago", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

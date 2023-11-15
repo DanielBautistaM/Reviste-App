@@ -13,6 +13,7 @@ public class Product implements Parcelable {
     public String sellerName;
     public List<String> additionalImages;
     public float ratings;
+    public boolean isPurchased; // New field indicating whether the product has been purchased
 
     public Product() {
         // Constructor sin argumentos requerido para Firestore
@@ -27,6 +28,8 @@ public class Product implements Parcelable {
         this.sellerName = sellerName;
         this.additionalImages = additionalImages;
         this.ratings = ratings;
+        this.isPurchased = false; // Initialize as not purchased by default
+
     }
 
 
@@ -40,6 +43,8 @@ public class Product implements Parcelable {
         sellerName = in.readString();
         additionalImages = in.createStringArrayList();
         ratings = in.readFloat();
+        isPurchased = in.readByte() != 0; // Read boolean from parcel
+
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -54,6 +59,13 @@ public class Product implements Parcelable {
         }
     };
 
+    public boolean isPurchased() {
+        return isPurchased;
+    }
+
+    public void setPurchased(boolean purchased) {
+        isPurchased = purchased;
+    }
     public String getId() {
         return id;
     }
@@ -134,5 +146,7 @@ public class Product implements Parcelable {
         dest.writeString(sellerName);
         dest.writeStringList(additionalImages);
         dest.writeFloat(ratings);
+        dest.writeByte((byte) (isPurchased ? 1 : 0)); // Write boolean to parcel
+
     }
 }
