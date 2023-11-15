@@ -94,7 +94,7 @@ public class AddProductActivity extends AppCompatActivity {
             btnUploadAdditionalImages[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectAdditionalImageFromGallery(index);
+                    showAdditionalImagePickerDialog(index);
                 }
             });
         }
@@ -167,6 +167,12 @@ public class AddProductActivity extends AppCompatActivity {
             int index = requestCode - 2;
             additionalImageUris[index] = data.getData();
             imgPreviewAdditionalImages[index].setImageURI(additionalImageUris[index]);
+        } else if (requestCode >= 102 && requestCode <= 105 && resultCode == RESULT_OK && data != null) {
+            int index = requestCode - 102;
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            additionalImageUris[index] = getImageUri(getApplicationContext(), imageBitmap);
+            imgPreviewAdditionalImages[index].setImageURI(additionalImageUris[index]);
         }
     }
 
@@ -177,10 +183,34 @@ public class AddProductActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    private void showAdditionalImagePickerDialog(final int index) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Image Source");
+        String[] options = {"Gallery", "Camera"};
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    selectAdditionalImageFromGallery(index);
+                } else if (which == 1) {
+                    dispatchTakeAdditionalPictureIntent(index);
+                }
+            }
+        });
+        builder.show();
+    }
+
     private void selectAdditionalImageFromGallery(final int index) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, index + 2);
+    }
+
+    private void dispatchTakeAdditionalPictureIntent(final int index) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, index + 102);
+        }
     }
 
     private void uploadProductData(final String name, final Double price, final String description, final float rating, final String sellerName) {
