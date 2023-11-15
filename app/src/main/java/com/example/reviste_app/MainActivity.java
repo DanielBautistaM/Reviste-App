@@ -4,6 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.content.DialogInterface;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(logOutIntent);
             }
         });
+        Button btnFilter = findViewById(R.id.btnFilter);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterDialog();
+            }
+        });
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -99,10 +113,83 @@ public class MainActivity extends AppCompatActivity {
                         productList.clear();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Product product = document.toObject(Product.class);
-                            productList.add(product);
+                            if (passesFilters(product)) {
+                                productList.add(product);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    private boolean passesFilters(Product product) {
+        boolean pricePassesFilter = (minPriceFilter == null || product.getPrice() >= minPriceFilter) &&
+                (maxPriceFilter == null || product.getPrice() <= maxPriceFilter);
+
+        boolean ratingPassesFilter = ratingFilter == null || Math.abs(product.getRatings() - ratingFilter) < 0.001;
+
+        return pricePassesFilter && ratingPassesFilter;
+    }
+
+    private void showFilterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_price_filter, null);
+        builder.setView(view);
+
+        final CheckBox chkEnablePriceFilter = view.findViewById(R.id.chkEnablePriceFilter);
+        final EditText etMinPrice = view.findViewById(R.id.etMinPrice);
+        final EditText etMaxPrice = view.findViewById(R.id.etMaxPrice);
+
+        final CheckBox chkEnableRatingFilter = view.findViewById(R.id.chkEnableRatingFilter);
+        Spinner spinnerRating = view.findViewById(R.id.spinnerRating);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ratings_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRating.setAdapter(adapter);
+
+        Button btnClearFilter = view.findViewById(R.id.btnClearFilter);
+
+        builder.setPositiveButton("Filtrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (chkEnablePriceFilter.isChecked()) {
+                    minPriceFilter = etMinPrice.getText().toString().isEmpty() ? null : Double.parseDouble(etMinPrice.getText().toString());
+                    maxPriceFilter = etMaxPrice.getText().toString().isEmpty() ? null : Double.parseDouble(etMaxPrice.getText().toString());
+                } else {
+                    minPriceFilter = null;
+                    maxPriceFilter = null;
+                }
+
+                if (chkEnableRatingFilter.isChecked()) {
+                    ratingFilter = spinnerRating.getSelectedItem().toString().equals("Sin filtro") ? null : Float.parseFloat(spinnerRating.getSelectedItem().toString());
+                } else {
+                    ratingFilter = null;
+                }
+
+                updateFilteredProducts();
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", null);
+
+        btnClearFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etMinPrice.setText("");
+                etMaxPrice.setText("");
+                spinnerRating.setSelection(0);
+                chkEnablePriceFilter.setChecked(false);
+                chkEnableRatingFilter.setChecked(false);
+                minPriceFilter = null;
+                maxPriceFilter = null;
+                ratingFilter = null;
+                updateFilteredProducts();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void updateFilteredProducts() {
+        retrieveDataFromFirestore();
     }
 }

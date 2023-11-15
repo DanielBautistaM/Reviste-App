@@ -74,7 +74,7 @@
                     android:fontFamily="@font/inter_bold"
                     android:text="Product Name"
                     android:textColor="@color/black"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/product_price"
