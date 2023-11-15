@@ -8,9 +8,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -21,6 +27,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private CartItemAdapter adapter;
     private TextView tvNombreDireccion;
     private TextView tvDepartamento;
+    private TextView tvPaymentInfo; // TextView to display payment information
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         cartTotalTextView = findViewById(R.id.cart_total_text);
         tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
         tvDepartamento = findViewById(R.id.tvDepartamento);
+        tvPaymentInfo = findViewById(R.id.tvPaymentInfo); // Assigning the TextView for payment info
+
 
         TextView btnCarrito = findViewById(R.id.btnCarrito);
 
@@ -56,7 +65,6 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         btnAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abre la nueva actividad de dirección
                 Intent intent = new Intent(CarritoActivity.this, DireccionActivity.class);
                 startActivity(intent);
             }
@@ -66,7 +74,6 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abre la nueva actividad de pago
                 Intent intent = new Intent(CarritoActivity.this, FormularioPagoActivity.class);
                 startActivity(intent);
             }
@@ -76,22 +83,18 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navegar de vuelta a la actividad principal (MainActivity)
                 Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
 
-        // Recibir información de dirección y departamento
-        Intent intent = getIntent();
-        if (intent != null) {
-            String nombreDireccion = intent.getStringExtra("nombre");
-            String departamentoDireccion = intent.getStringExtra("departamento");
+        // Receiving and displaying the payment info
 
-            if (nombreDireccion != null && departamentoDireccion != null) {
-                tvNombreDireccion.setText(nombreDireccion);
-                tvDepartamento.setText(departamentoDireccion);
-            }
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("DOCUMENT_ID")) {
+            String documentId = intent.getStringExtra("DOCUMENT_ID");
+            fetchPaymentInfo(documentId);
         }
 
         updateCartTotalText();
@@ -111,5 +114,36 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private void updateCartTotalText() {
         double cartTotal = CartManager.getCartTotal();
         cartTotalTextView.setText("$" + cartTotal);
+    }
+
+    private void fetchPaymentInfo(String documentId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("pagos").document(documentId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            PagoInfo pagoInfo = documentSnapshot.toObject(PagoInfo.class);
+                            displayPaymentInfo(pagoInfo);
+                        } else {
+                            Toast.makeText(CarritoActivity.this, "No se encontró la información de pago", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CarritoActivity.this, "Error al obtener la información de pago", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void displayPaymentInfo(PagoInfo pagoInfo) {
+        if (pagoInfo != null) {
+            String paymentDetails = "Tarjeta: " + pagoInfo.getNumeroTarjeta() +
+                    "\nVence: " + pagoInfo.getMesVencimiento() + "/" + pagoInfo.getAnioVencimiento() +
+                    "\nCVV: " + pagoInfo.getCvv();
+            tvPaymentInfo.setText(paymentDetails);
+        }
     }
 }

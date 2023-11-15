@@ -1,5 +1,6 @@
 package com.example.reviste_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -31,63 +32,75 @@ public class FormularioPagoActivity extends AppCompatActivity {
     }
 
     private void confirmarPago() {
-        // Obtén referencias a los EditTexts
         EditText etNumeroTarjeta = findViewById(R.id.etNumeroTarjeta);
         EditText etMesVencimiento = findViewById(R.id.etMesVencimiento);
         EditText etAnioVencimiento = findViewById(R.id.etAnioVencimiento);
         EditText etCVV = findViewById(R.id.etCVV);
 
-        // Obtén los valores ingresados por el usuario
         String numeroTarjeta = etNumeroTarjeta.getText().toString();
         String mesVencimientoStr = etMesVencimiento.getText().toString();
         String anioVencimientoStr = etAnioVencimiento.getText().toString();
         String cvv = etCVV.getText().toString();
 
-        // Validar la longitud de los campos
-        if (numeroTarjeta.length() != 16) {
-            etNumeroTarjeta.setError("La tarjeta debe tener 18 caracteres");
-            return;
+        if (!validatePaymentInfo(numeroTarjeta, mesVencimientoStr, anioVencimientoStr, cvv)) {
+            return; // Early return if validation fails
         }
 
-        if (mesVencimientoStr.length() != 2) {
-            etMesVencimiento.setError("El mes debe tener 2 caracteres");
-            return;
-        }
-
-        if (anioVencimientoStr.length() != 4) {
-            etAnioVencimiento.setError("El año debe tener 4 caracteres");
-            return;
-        }
-
-        if (cvv.length() != 3) {
-            etCVV.setError("El CVV debe tener 3 caracteres");
-            return;
-        }
-
-        // Convertir los valores de mes y año a enteros
         int mesVencimiento = Integer.parseInt(mesVencimientoStr);
         int anioVencimiento = Integer.parseInt(anioVencimientoStr);
 
-        // Crear un objeto para la información de pago
         PagoInfo pagoInfo = new PagoInfo(numeroTarjeta, mesVencimiento, anioVencimiento, cvv);
 
-        // Guardar la información en Firebase
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("pagos").add(pagoInfo)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        // Éxito al guardar en Firebase
                         Toast.makeText(FormularioPagoActivity.this, "Información de pago guardada", Toast.LENGTH_SHORT).show();
-                        finish(); // Cerrar la actividad después de un pago exitoso
+                        String documentId = documentReference.getId();
+                        navigateToCarritoActivity(documentId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Error al guardar en Firebase
                         Toast.makeText(FormularioPagoActivity.this, "Error al guardar la información de pago", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private boolean validatePaymentInfo(String numeroTarjeta, String mesVencimiento, String anioVencimiento, String cvv) {
+        if (numeroTarjeta.length() != 16) {
+            EditText etNumeroTarjeta = findViewById(R.id.etNumeroTarjeta);
+            etNumeroTarjeta.setError("La tarjeta debe tener 16 caracteres");
+            return false;
+        }
+
+        if (mesVencimiento.length() != 2) {
+            EditText etMesVencimiento = findViewById(R.id.etMesVencimiento);
+            etMesVencimiento.setError("El mes debe tener 2 caracteres");
+            return false;
+        }
+
+        if (anioVencimiento.length() != 4) {
+            EditText etAnioVencimiento = findViewById(R.id.etAnioVencimiento);
+            etAnioVencimiento.setError("El año debe tener 4 caracteres");
+            return false;
+        }
+
+        if (cvv.length() != 3) {
+            EditText etCVV = findViewById(R.id.etCVV);
+            etCVV.setError("El CVV debe tener 3 caracteres");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void navigateToCarritoActivity(String documentId) {
+        Intent intent = new Intent(FormularioPagoActivity.this, CarritoActivity.class);
+        intent.putExtra("DOCUMENT_ID", documentId);
+        startActivity(intent);
+        finish(); // Optionally close this activity
     }
 }
