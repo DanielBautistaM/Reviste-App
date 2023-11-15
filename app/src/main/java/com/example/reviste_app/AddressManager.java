@@ -13,6 +13,12 @@ public class AddressManager {
         prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
+    public void clearData() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(ADDRESS_NAME_KEY);
+        editor.remove(ADDRESS_DEPT_KEY);
+        editor.apply();
+    }
     public void saveAddress(String name, String department) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ADDRESS_NAME_KEY, name);

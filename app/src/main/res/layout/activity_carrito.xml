@@ -47,12 +47,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/tvPago"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:fontFamily="@font/inter_semibold"
             android:text="Pago"
@@ -63,6 +64,7 @@
             android:id="@+id/btnPagar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/arrow___right_2" />
 
@@ -72,10 +74,11 @@
         android:id="@+id/tvPaymentInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
         android:fontFamily="@font/inter"
         android:padding="16dp"
-        android:text="DASDASD"
-        android:textColor="@color/black"
+        android:text="Añadir Pago"
+        android:textColor="@color/gris"
         android:textSize="16sp" />
 
     <LinearLayout

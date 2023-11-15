@@ -82,9 +82,23 @@ public class FormularioPagoActivity extends AppCompatActivity {
             return false;
         }
 
+        int mesInt = Integer.parseInt(mesVencimiento);
+        if (mesInt < 1 || mesInt > 12) {
+            EditText etMesVencimiento = findViewById(R.id.etMesVencimiento);
+            etMesVencimiento.setError("El mes debe estar entre 1 y 12");
+            return false;
+        }
+
         if (anioVencimiento.length() != 4) {
             EditText etAnioVencimiento = findViewById(R.id.etAnioVencimiento);
             etAnioVencimiento.setError("El año debe tener 4 caracteres");
+            return false;
+        }
+
+        int anioInt = Integer.parseInt(anioVencimiento);
+        if (anioInt <= 2023) {
+            EditText etAnioVencimiento = findViewById(R.id.etAnioVencimiento);
+            etAnioVencimiento.setError("El año debe ser mayor a 2023");
             return false;
         }
 
@@ -96,6 +110,7 @@ public class FormularioPagoActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     private void navigateToCarritoActivity(String documentId) {
         Intent intent = new Intent(FormularioPagoActivity.this, CarritoActivity.class);

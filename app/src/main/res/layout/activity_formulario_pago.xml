@@ -1,4 +1,3 @@
-<!-- res/layout/activity_formulario_pago.xml -->
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,16 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Back Button -->
+
+    <!-- Title Text -->
+
+    <!-- Form Elements -->
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="56dp"
+        android:layout_height="44dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/back" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/back_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-12dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Direccion"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btn_tarjeta"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <EditText
             android:id="@+id/etNumeroTarjeta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/grisClaro"
+            android:fontFamily="@font/inter"
             android:hint="Número de Tarjeta"
             android:inputType="number" />
 
@@ -23,6 +57,8 @@
             android:id="@+id/etCVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/grisClaro"
+            android:fontFamily="@font/inter"
             android:hint="CVV"
             android:inputType="number" />
 
@@ -36,6 +72,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/grisClaro"
+                android:fontFamily="@font/inter"
                 android:hint="Mes"
                 android:inputType="number" />
 
@@ -44,11 +82,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/grisClaro"
+                android:fontFamily="@font/inter"
                 android:hint="Año"
                 android:inputType="number" />
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Add Payment Method Button -->
     <TextView
         android:id="@+id/btn_tarjeta"
         android:layout_width="match_parent"
@@ -60,4 +101,5 @@
         android:text="Añadir Metodo de Pago"
         android:textColor="#FFFFFF"
         android:textSize="17dp" />
+
 </RelativeLayout>

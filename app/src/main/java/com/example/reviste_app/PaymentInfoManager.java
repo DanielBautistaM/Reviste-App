@@ -17,7 +17,11 @@ public class PaymentInfoManager {
         editor.putString(PAYMENT_DOC_ID_KEY, documentId);
         editor.apply();
     }
-
+    public void clearData() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PAYMENT_DOC_ID_KEY);
+        editor.apply();
+    }
     public String getPaymentDocumentId() {
         return prefs.getString(PAYMENT_DOC_ID_KEY, "");
     }
