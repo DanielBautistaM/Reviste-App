@@ -1,8 +1,9 @@
 package com.example.reviste_app;
 
-import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,12 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +43,7 @@ public class AddProductActivity extends AppCompatActivity {
     private float rating = 0.0f;
     private String selectedRating;
 
-    private static final int CAMERA_PERMISSION_CODE = 100;
-    private static final int CAMERA_REQUEST_CODE = 101;
+    private static final int REQUEST_IMAGE_CAPTURE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +79,7 @@ public class AddProductActivity extends AppCompatActivity {
         btnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(AddProductActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(AddProductActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                } else {
-                    selectImageFromCamera();
-                }
+                showImagePickerDialog();
             }
         });
 
@@ -127,26 +122,46 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    private void selectImageFromCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-        } else {
-            Toast.makeText(this, "No se pudo abrir la cámara", Toast.LENGTH_SHORT).show();
-        }
+    private void showImagePickerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Image Source");
+        String[] options = {"Gallery", "Camera"};
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    selectImageFromGallery();
+                } else if (which == 1) {
+                    dispatchTakePictureIntent();
+                }
+            }
+        });
+        builder.show();
     }
 
-    private void selectAdditionalImageFromGallery(final int index) {
+    private void selectImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent, index + 2);
+        startActivityForResult(intent, 1);
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
+            imgProductImage.setImageURI(imageUri);
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageUri = getImageUri(getApplicationContext(), imageBitmap);
             imgProductImage.setImageURI(imageUri);
         } else if (requestCode >= 2 && requestCode <= 5 && resultCode == RESULT_OK && data != null) {
             int index = requestCode - 2;
@@ -155,16 +170,17 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                selectImageFromCamera();
-            } else {
-                Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
-            }
-        }
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
+    private void selectAdditionalImageFromGallery(final int index) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, index + 2);
     }
 
     private void uploadProductData(final String name, final Double price, final String description, final float rating, final String sellerName) {
@@ -192,21 +208,20 @@ public class AddProductActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
-                        Toast.makeText(AddProductActivity.this, "Error al cargar la imagen principal", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void uploadAdditionalImages(final String name, final Double price, final String description, final String imageUrl, final List<String> additionalImages, final int index, final String sellerName) {
         if (index < 4 && additionalImageUris[index] != null) {
-            String additionalImageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
-            final StorageReference additionalStorageRef = FirebaseStorage.getInstance().getReference().child(additionalImageName);
+            String imageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
+            final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
 
-            additionalStorageRef.putFile(additionalImageUris[index])
+            storageRef.putFile(additionalImageUris[index])
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            additionalStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri downloadUrl) {
                                     String additionalImageUrl = downloadUrl.toString();
@@ -221,20 +236,16 @@ public class AddProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             isCreatingProduct = false;
                             btnAddProduct.setEnabled(true);
-                            Toast.makeText(AddProductActivity.this, "Error al cargar una imagen adicional", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
-            // Ahora, creamos un producto sin proporcionar el ID
             Product product = new Product(name, price, imageUrl, description, sellerName, additionalImages, rating);
 
-            // Agregamos el producto a Firestore
             db.collection("Productos")
                     .add(product)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            // Actualizamos el ID después de agregar el producto
                             documentReference.update("id", documentReference.getId())
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -249,7 +260,6 @@ public class AddProductActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             isCreatingProduct = false;
                                             btnAddProduct.setEnabled(true);
-                                            Toast.makeText(AddProductActivity.this, "Error al agregar el producto", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
@@ -259,10 +269,8 @@ public class AddProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             isCreatingProduct = false;
                             btnAddProduct.setEnabled(true);
-                            Toast.makeText(AddProductActivity.this, "Error al agregar el producto", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
-
 }

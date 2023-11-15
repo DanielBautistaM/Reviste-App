@@ -18,7 +18,7 @@ public class Product implements Parcelable {
         // Constructor sin argumentos requerido para Firestore
     }
 
-    // Constructor sin el parámetro 'id'
+    // Actualiza el constructor de la clase Product
     public Product(String name, Double price, String image, String description, String sellerName, List<String> additionalImages, float ratings) {
         this.name = name;
         this.price = price;
@@ -28,6 +28,7 @@ public class Product implements Parcelable {
         this.additionalImages = additionalImages;
         this.ratings = ratings;
     }
+
 
     protected Product(Parcel in) {
         id = in.readString();
