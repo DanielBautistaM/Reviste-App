@@ -2,7 +2,6 @@ package com.example.reviste_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,7 +26,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private CartItemAdapter adapter;
     private TextView tvNombreDireccion;
     private TextView tvDepartamento;
-    private TextView tvPaymentInfo; // TextView for displaying payment information
+    private TextView tvPaymentInfo;
 
     private AddressManager addressManager;
     private PaymentInfoManager paymentInfoManager;
@@ -50,7 +49,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         cartTotalTextView = findViewById(R.id.cart_total_text);
         tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
         tvDepartamento = findViewById(R.id.tvDepartamento);
-        tvPaymentInfo = findViewById(R.id.tvPaymentInfo); // Initialize TextView for payment info
+        tvPaymentInfo = findViewById(R.id.tvPaymentInfo);
 
         setupButtons();
         displaySavedData();
@@ -65,12 +64,15 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CarritoActivity", "Botón 'Realizar Pedido' clickeado");
-                double cartTotal = CartManager.getCartTotal();
-                Toast.makeText(CarritoActivity.this, "Pedido realizado. Total: $" + cartTotal, Toast.LENGTH_SHORT).show();
-                cartItems.clear();
-                adapter.notifyDataSetChanged();
-                updateCartTotalText();
+                if (isAddressAndPaymentInfoProvided()) {
+                    double cartTotal = CartManager.getCartTotal();
+                    Toast.makeText(CarritoActivity.this, "Pedido realizado. Total: $" + cartTotal, Toast.LENGTH_SHORT).show();
+                    cartItems.clear();
+                    adapter.notifyDataSetChanged();
+                    updateCartTotalText();
+                } else {
+                    Toast.makeText(CarritoActivity.this, "Por favor, ingrese la dirección y la información de pago", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -100,6 +102,12 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                 startActivity(intent);
             }
         });
+    }
+
+    private boolean isAddressAndPaymentInfoProvided() {
+        String addressName = addressManager.getAddressName();
+        String paymentDocumentId = paymentInfoManager.getPaymentDocumentId();
+        return !addressName.isEmpty() && !paymentDocumentId.isEmpty();
     }
 
     private void handleIntentExtras() {
@@ -177,7 +185,7 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
 
     private void displayPaymentInfo(PagoInfo pagoInfo) {
         if (pagoInfo != null) {
-            String paymentDetails = "Tarjeta: " + pagoInfo.getNumeroTarjeta() +
+            String paymentDetails = pagoInfo.getNumeroTarjeta() +
                     "\nVence: " + pagoInfo.getMesVencimiento() + "/" + pagoInfo.getAnioVencimiento() +
                     "\nCVV: " + pagoInfo.getCvv();
             tvPaymentInfo.setText(paymentDetails);

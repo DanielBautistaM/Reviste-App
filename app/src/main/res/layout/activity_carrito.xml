@@ -85,7 +85,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="8dp"
-            android:src="@drawable/tu_imagen"
             app:srcCompat="@drawable/group_24" />
 
         <TextView
