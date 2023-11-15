@@ -1,8 +1,11 @@
 package com.example.reviste_app;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,9 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,6 +42,9 @@ public class AddProductActivity extends AppCompatActivity {
     private boolean isCreatingProduct = false;
     private float rating = 0.0f;
     private String selectedRating;
+
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int CAMERA_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,11 @@ public class AddProductActivity extends AppCompatActivity {
         btnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImageFromGallery();
+                if (ContextCompat.checkSelfPermission(AddProductActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(AddProductActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                } else {
+                    selectImageFromCamera();
+                }
             }
         });
 
@@ -99,7 +112,6 @@ public class AddProductActivity extends AppCompatActivity {
                     btnAddProduct.setEnabled(false);
 
                     String name = etProductName.getText().toString();
-                    // Cambiado para parsear el precio como Double
                     Double price = Double.parseDouble(etProductPrice.getText().toString());
                     String description = etProductDescription.getText().toString();
                     String sellerName = etSellerName.getText().toString();
@@ -115,10 +127,13 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    private void selectImageFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
+    private void selectImageFromCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+        } else {
+            Toast.makeText(this, "No se pudo abrir la cámara", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void selectAdditionalImageFromGallery(final int index) {
@@ -130,13 +145,25 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             imgProductImage.setImageURI(imageUri);
         } else if (requestCode >= 2 && requestCode <= 5 && resultCode == RESULT_OK && data != null) {
             int index = requestCode - 2;
             additionalImageUris[index] = data.getData();
             imgPreviewAdditionalImages[index].setImageURI(additionalImageUris[index]);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImageFromCamera();
+            } else {
+                Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -165,20 +192,21 @@ public class AddProductActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         isCreatingProduct = false;
                         btnAddProduct.setEnabled(true);
+                        Toast.makeText(AddProductActivity.this, "Error al cargar la imagen principal", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void uploadAdditionalImages(final String name, final Double price, final String description, final String imageUrl, final List<String> additionalImages, final int index, final String sellerName) {
         if (index < 4 && additionalImageUris[index] != null) {
-            String imageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
-            final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(imageName);
+            String additionalImageName = "additional_images/" + System.currentTimeMillis() + ".jpg";
+            final StorageReference additionalStorageRef = FirebaseStorage.getInstance().getReference().child(additionalImageName);
 
-            storageRef.putFile(additionalImageUris[index])
+            additionalStorageRef.putFile(additionalImageUris[index])
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            additionalStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri downloadUrl) {
                                     String additionalImageUrl = downloadUrl.toString();
@@ -193,6 +221,7 @@ public class AddProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             isCreatingProduct = false;
                             btnAddProduct.setEnabled(true);
+                            Toast.makeText(AddProductActivity.this, "Error al cargar una imagen adicional", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
@@ -220,6 +249,7 @@ public class AddProductActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             isCreatingProduct = false;
                                             btnAddProduct.setEnabled(true);
+                                            Toast.makeText(AddProductActivity.this, "Error al agregar el producto", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
@@ -229,8 +259,10 @@ public class AddProductActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             isCreatingProduct = false;
                             btnAddProduct.setEnabled(true);
+                            Toast.makeText(AddProductActivity.this, "Error al agregar el producto", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
+
 }

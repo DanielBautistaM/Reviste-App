@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Revisteapp"
         tools:targetApi="31">
+
+        <!-- Actividades -->
         <activity
             android:name=".FormularioPagoActivity"
             android:exported="false" />
@@ -32,7 +34,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,12 +59,28 @@
             android:name=".MainActivity"
             android:exported="false" />
 
+        <!-- Proveedor de archivos -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.reviste_app.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Permisos -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
