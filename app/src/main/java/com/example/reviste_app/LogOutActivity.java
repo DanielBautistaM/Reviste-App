@@ -27,19 +27,35 @@ public class LogOutActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Clear user-specific data
-                CartManager.clearCart();
-                addressManager.clearData();
-                paymentInfoManager.clearData();
-
-                // Sign out from Firebase Auth
-                mAuth.signOut();
-
-                // Navigate to Login Screen
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
+                logout();
             }
         });
+    }
+
+    private void logout() {
+        // Clear user-specific data
+        CartManager.clearCart();
+        addressManager.clearData();
+        paymentInfoManager.clearData();
+
+        // Sign out from Firebase Auth
+        mAuth.signOut();
+
+        // Navigate to Login Screen
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        logout();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        logout();
+        super.onPause();
     }
 }
