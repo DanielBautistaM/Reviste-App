@@ -24,10 +24,11 @@
     <Button
         android:id="@+id/button_out"
         android:layout_width="342dp"
-        android:layout_height="162dp"
+        android:layout_height="50dp"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="35dp"
         android:layout_marginBottom="268dp"
+        android:backgroundTint="@color/principal_color"
         android:gravity="center"
         android:text="Cerrar Session"
         app:layout_constraintBottom_toBottomOf="parent"

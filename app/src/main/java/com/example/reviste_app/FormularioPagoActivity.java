@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,14 @@ public class FormularioPagoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_pago);
+
+        ImageButton backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FormularioPagoActivity.this, CarritoActivity.class));
+            }
+        });
 
         TextView btnTarjeta = findViewById(R.id.btn_tarjeta);
         btnTarjeta.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +52,7 @@ public class FormularioPagoActivity extends AppCompatActivity {
         String cvv = etCVV.getText().toString();
 
         if (!validatePaymentInfo(numeroTarjeta, mesVencimientoStr, anioVencimientoStr, cvv)) {
-            return; // Early return if validation fails
+            return;
         }
 
         int mesVencimiento = Integer.parseInt(mesVencimientoStr);
@@ -111,11 +120,9 @@ public class FormularioPagoActivity extends AppCompatActivity {
         return true;
     }
 
-
     private void navigateToCarritoActivity(String documentId) {
         Intent intent = new Intent(FormularioPagoActivity.this, CarritoActivity.class);
         intent.putExtra("DOCUMENT_ID", documentId);
         startActivity(intent);
-        finish(); // Optionally close this activity
     }
 }
