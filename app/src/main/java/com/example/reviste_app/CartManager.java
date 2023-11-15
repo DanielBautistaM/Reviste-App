@@ -46,7 +46,12 @@ public class CartManager {
             cartTotal += (cartItem.getPrice() * (updatedQuantity - 1));
         }
     }
-
+    public static boolean isCartEmpty() {
+        return cartItems.isEmpty();
+    }
+    public static void resetCartTotal() {
+        cartTotal = 0.0;
+    }
     public static void updateCartTotal(double newTotal) {
         cartTotal = newTotal;
     }

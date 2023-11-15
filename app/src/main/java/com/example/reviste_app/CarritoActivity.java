@@ -49,18 +49,23 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
 
     private void setupButtons() {
         TextView btnCarrito = findViewById(R.id.btnCarrito);
+
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAddressAndPaymentInfoProvided()) {
-                    double cartTotal = CartManager.getCartTotal();
-                    Toast.makeText(CarritoActivity.this, "Pedido realizado. Total: $" + cartTotal, Toast.LENGTH_SHORT).show();
-                    markProductsAsPurchased();
-                    cartItems.clear();
-                    adapter.notifyDataSetChanged();
-                    updateCartTotalText();
+                if (!CartManager.isCartEmpty()) {
+                    if (isAddressAndPaymentInfoProvided()) {
+                        markProductsAsPurchased();
+                        cartItems.clear();
+                        adapter.notifyDataSetChanged();
+                        CartManager.resetCartTotal();
+                        updateCartTotalText();
+                        navigateToOrderConfirmed();
+                    } else {
+                        Toast.makeText(CarritoActivity.this, "Por favor, ingrese la dirección y la información de pago", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(CarritoActivity.this, "Por favor, ingrese la dirección y la información de pago", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CarritoActivity.this, "El carrito está vacío. Agregue productos antes de comprar.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -186,5 +191,10 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                     "\nCVV: " + pagoInfo.getCvv();
             tvPaymentInfo.setText(paymentDetails);
         }
+    }
+
+    private void navigateToOrderConfirmed() {
+        Intent intent = new Intent(CarritoActivity.this, OrderConfirmedActivity.class);
+        startActivity(intent);
     }
 }
