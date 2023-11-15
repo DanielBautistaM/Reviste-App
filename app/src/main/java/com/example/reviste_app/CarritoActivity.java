@@ -27,12 +27,18 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
     private CartItemAdapter adapter;
     private TextView tvNombreDireccion;
     private TextView tvDepartamento;
-    private TextView tvPaymentInfo; // TextView to display payment information
+    private TextView tvPaymentInfo; // TextView for displaying payment information
+
+    private AddressManager addressManager;
+    private PaymentInfoManager paymentInfoManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrito);
+
+        addressManager = new AddressManager(this);
+        paymentInfoManager = new PaymentInfoManager(this);
 
         cartItems = CartManager.getCartItems();
 
@@ -44,11 +50,18 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
         cartTotalTextView = findViewById(R.id.cart_total_text);
         tvNombreDireccion = findViewById(R.id.tvNombreDireccion);
         tvDepartamento = findViewById(R.id.tvDepartamento);
-        tvPaymentInfo = findViewById(R.id.tvPaymentInfo); // Assigning the TextView for payment info
+        tvPaymentInfo = findViewById(R.id.tvPaymentInfo); // Initialize TextView for payment info
 
+        setupButtons();
+        displaySavedData();
 
+        handleIntentExtras();
+
+        updateCartTotalText();
+    }
+
+    private void setupButtons() {
         TextView btnCarrito = findViewById(R.id.btnCarrito);
-
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,17 +100,41 @@ public class CarritoActivity extends AppCompatActivity implements CartItemAdapte
                 startActivity(intent);
             }
         });
+    }
 
-        // Receiving and displaying the payment info
-
-
+    private void handleIntentExtras() {
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("DOCUMENT_ID")) {
-            String documentId = intent.getStringExtra("DOCUMENT_ID");
+        if (intent != null) {
+            if (intent.hasExtra("nombre") && intent.hasExtra("departamento")) {
+                String nombre = intent.getStringExtra("nombre");
+                String departamento = intent.getStringExtra("departamento");
+                addressManager.saveAddress(nombre, departamento);
+                displayAddress();
+            }
+
+            if (intent.hasExtra("DOCUMENT_ID")) {
+                String documentId = intent.getStringExtra("DOCUMENT_ID");
+                paymentInfoManager.savePaymentDocumentId(documentId);
+                fetchPaymentInfo(documentId);
+            }
+        }
+    }
+
+    private void displaySavedData() {
+        displayAddress();
+        String documentId = paymentInfoManager.getPaymentDocumentId();
+        if (!documentId.isEmpty()) {
             fetchPaymentInfo(documentId);
         }
+    }
 
-        updateCartTotalText();
+    private void displayAddress() {
+        String nombre = addressManager.getAddressName();
+        String departamento = addressManager.getAddressDepartment();
+        if (!nombre.isEmpty() && !departamento.isEmpty()) {
+            tvNombreDireccion.setText(nombre);
+            tvDepartamento.setText(departamento);
+        }
     }
 
     @Override
